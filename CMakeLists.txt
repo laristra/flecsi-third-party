@@ -1,4 +1,4 @@
-project(ThirdParty)
+project(ThirdParty LANGUAGES CXX C Fortran)
 cmake_minimum_required(VERSION 3.1.0)
 include(CMakeDependentOption)
 include(ExternalProject) 
