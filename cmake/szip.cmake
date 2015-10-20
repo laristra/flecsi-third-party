@@ -16,4 +16,4 @@ ExternalProject_Add(${SZIP_NAME}
 )
 
 set(SZIP_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
-set(SZIP_LIBRARY ${CMAKE_INSTALL_PREFIX}/lib/libszip.a)
+set(SZIP_LIBRARIES ${CMAKE_INSTALL_PREFIX}/lib/libszip.a)

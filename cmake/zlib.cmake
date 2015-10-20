@@ -16,4 +16,4 @@ ExternalProject_Add(${ZLIB_NAME}
 )
 
 set(ZLIB_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
-set(ZLIB_LIBRARY ${CMAKE_INSTALL_PREFIX}/lib/libz.a)
+set(ZLIB_LIBRARIES ${CMAKE_INSTALL_PREFIX}/lib/libz.a)
