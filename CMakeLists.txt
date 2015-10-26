@@ -20,6 +20,9 @@ cmake_dependent_option(ENABLE_SZIP "Enable szip" ON
 cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ON
                        "ENABLE_HDF5" OFF)
 
+option(ENABLE_METIS "Enable METIS and dependencies" OFF)
+
+
 # build the libraries
 if(ENABLE_ZLIB)
   include(cmake/zlib.cmake)
@@ -40,3 +43,7 @@ endif(ENABLE_NETCDF)
 if(ENABLE_EXODUS)
   include(cmake/exodus.cmake)
 endif(ENABLE_EXODUS)
+
+if(ENABLE_METIS)
+  include(cmake/metis.cmake)
+endif()
