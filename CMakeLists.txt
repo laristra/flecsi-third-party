@@ -22,6 +22,8 @@ cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ON
 
 option(ENABLE_METIS "Enable METIS and dependencies" OFF)
 
+option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" OFF)
+
 
 # build the libraries
 if(ENABLE_ZLIB)
@@ -46,4 +48,8 @@ endif(ENABLE_EXODUS)
 
 if(ENABLE_METIS)
   include(cmake/metis.cmake)
+endif()
+
+if(ENABLE_SCOTCH)
+  include(cmake/scotch.cmake)
 endif()
