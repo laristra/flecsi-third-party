@@ -8,12 +8,21 @@ libraries.
 HDF5 requires CMake >= 3.1.0
 
 % module load cmake
+
 % module load other/git-1.8.2.2
+
 % module load compilers/gcc/5.2.0
+
 % git clone git@gitlab.lanl.gov:csse/ThirdParty.git
-% cd ThirdParty
+
+% git clone git@github.com:flecsi/third-party.git
+
+% cd third-party
+
 % mkdir build
+
 % cd build
+
 % ccmake ../
 
 Press "c" to configure. Enable libraries desired. (Press enter to change
