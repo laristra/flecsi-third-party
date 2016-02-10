@@ -1,4 +1,4 @@
-# ThirdParty
+# third-party
 
 This project provides an easy way to build and install many third party
 libraries.
