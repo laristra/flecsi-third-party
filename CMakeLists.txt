@@ -20,6 +20,8 @@ cmake_dependent_option(ENABLE_SZIP "Enable szip" ON
 cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ON
                        "ENABLE_HDF5" OFF)
 
+option(ENABLE_LAPACK "Enable LAPACK and dependencies" OFF)
+
 option(ENABLE_METIS "Enable METIS and dependencies" OFF)
 
 option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" OFF)
@@ -45,6 +47,10 @@ endif(ENABLE_NETCDF)
 if(ENABLE_EXODUS)
   include(cmake/exodus.cmake)
 endif(ENABLE_EXODUS)
+
+if(ENABLE_LAPACK)
+  include(cmake/lapack.cmake)
+endif(ENABLE_LAPACK)
 
 if(ENABLE_METIS)
   include(cmake/metis.cmake)
