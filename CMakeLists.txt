@@ -59,3 +59,5 @@ endif()
 if(ENABLE_SCOTCH)
   include(cmake/scotch.cmake)
 endif()
+
+install(SCRIPT scripts/post_install.cmake)
