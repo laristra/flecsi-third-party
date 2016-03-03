@@ -19,5 +19,10 @@ ExternalProject_Add(${LAPACK_NAME}
     -DLAPACKE=ON
 )
 
+ExternalProject_Add_Step(${LAPACK_NAME} fixup
+  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/scripts/lapack_post_install.cmake ${CMAKE_INSTALL_PREFIX}
+    DEPENDEES install
+)
+
 set(LAPACK_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
 set(LAPACK_LIBRARIES ${CMAKE_INSTALL_PREFIX}/lib/liblapacke.a)

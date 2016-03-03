@@ -60,4 +60,6 @@ if(ENABLE_SCOTCH)
   include(cmake/scotch.cmake)
 endif()
 
-install(SCRIPT scripts/post_install.cmake)
+if(ENABLE_LAPACK)
+  install(SCRIPT scripts/lapack_post_install.cmake)
+endif(ENABLE_LAPACK)
