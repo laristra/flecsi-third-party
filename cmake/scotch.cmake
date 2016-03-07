@@ -21,10 +21,12 @@ else ()
         set(SCOTCH_MAKE Makefile.inc.i686_pc_linux2)
         set(SCOTCH_CFLAGS "-DCOMMON_FILE_COMPRESS_GZ -DCOMMON_PTHREAD -DCOMMON_RANDOM_FIXED_SEED -DSCOTCH_RENAME -DSCOTCH_PTHREAD -Drestrict=__restrict")
     endif ()
-    set(SCOTCH_LDFLAGS "-lz -lm -lrt -lpthread")
+    set(SCOTCH_LDFLAGS "${ZLIB_LIBRARIES} -lm -lrt -lpthread")
 endif ()
 
 ExternalProject_Add( ${SCOTCH_NAME}
+ DEPENDS ${ZLIB_PACKAGE_NAME}
+
  URL ${SCOTCH_URL}/${SCOTCH_GZ}
  URL_MD5 ${SCOTCH_MD5}
  UPDATE_COMMAND ""

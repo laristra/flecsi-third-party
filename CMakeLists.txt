@@ -17,14 +17,14 @@ cmake_dependent_option(ENABLE_NETCDF "Enable HDF5" ON
                        "ENABLE_EXODUS" OFF)
 cmake_dependent_option(ENABLE_SZIP "Enable szip" ON
                        "ENABLE_HDF5" OFF)
-cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ON
-                       "ENABLE_HDF5" OFF)
 
 option(ENABLE_LAPACK "Enable LAPACK and dependencies" OFF)
 
 option(ENABLE_METIS "Enable METIS and dependencies" OFF)
 
 option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" OFF)
+cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ON
+                       "ENABLE_HDF5 OR ENABLE_SCOTCH" OFF)
 
 
 # build the libraries
