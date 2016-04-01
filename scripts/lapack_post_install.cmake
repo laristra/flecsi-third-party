@@ -26,4 +26,4 @@ if(NOT MINGW AND NOT MSVC)
   execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink
     ${CMAKE_INSTALL_PREFIX}/include/lapacke_utils.h
     ${CMAKE_INSTALL_PREFIX}/include/lapacke/lapacke_utils.h)
-endif(NOT MINGW)
+endif(NOT MINGW AND NOT MSVC)
