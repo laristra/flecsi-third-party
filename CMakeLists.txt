@@ -9,6 +9,15 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   "default install path" FORCE)
 endif()
 
+option(BUILD_SHARED_LIBS "Build shared libs" OFF)
+if(BUILD_SHARED_LIBS)
+    set(CMAKE_LIBRARY_PREFIX ${CMAKE_SHARED_LIBRARY_PREFIX})
+    set(CMAKE_LIBRARY_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
+else()
+    set(CMAKE_LIBRARY_PREFIX ${CMAKE_STATIC_LIBRARY_PREFIX})
+    set(CMAKE_LIBRARY_SUFFIX ${CMAKE_STATIC_LIBRARY_SUFFIX})
+endif()
+
 # third party libraries to build
 option(ENABLE_EXODUS "Enable Exodus and dependencies" OFF)
 cmake_dependent_option(ENABLE_HDF5 "Enable HDF5" ON

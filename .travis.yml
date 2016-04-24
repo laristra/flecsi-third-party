@@ -23,9 +23,12 @@ env:
   global:
     - CCACHE_CPP2=yes
     - GVER=5
+  matrix:
+    - SHARED=OFF
+    - SHARED=ON
 
 script:
-  - mkdir build && cd build && cmake -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON -DENABLE_METIS=ON -DENABLE_SCOTCH=ON -DENABLE_ZLIB=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl .. && make -j2 && cd ..
+  - mkdir build && cd build && cmake -DBUILD_SHARED_LIBS="${SHARED}" -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON -DENABLE_METIS=ON -DENABLE_SCOTCH=ON -DENABLE_ZLIB=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl .. && make -j2 && cd ..
   - cd ../flecsi && mkdir build && cd build && cmake -DTPL_INSTALL_PREFIX=$HOME/tpl -DENABLE_PARTITION=ON -DENABLE_IO=ON -DENABLE_UNIT_TESTS=ON .. && make -j2 && make test
 
 cache:
