@@ -35,6 +35,9 @@ option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" OFF)
 cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ON
                        "ENABLE_HDF5 OR ENABLE_SCOTCH" OFF)
 
+option(ENABLE_LEGION "Enable LEGION and dependencies" OFF)
+cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ON
+                       "ENABLE_LEGION" OFF)
 
 # build the libraries
 if(ENABLE_ZLIB)
@@ -72,3 +75,11 @@ endif()
 if(ENABLE_LAPACK)
   install(SCRIPT scripts/lapack_post_install.cmake)
 endif(ENABLE_LAPACK)
+
+if(ENABLE_GASNET)
+  include(cmake/gasnet.cmake)
+endif(ENABLE_GASNET)
+
+if(ENABLE_LEGION)
+  include(cmake/legion.cmake)
+endif(ENABLE_LEGION)
