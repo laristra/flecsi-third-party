@@ -24,7 +24,6 @@ env:
     - CCACHE_CPP2=yes
     - GVER=5
   matrix:
-    - SHARED=OFF
     - SHARED=ON
 
 script:
