@@ -28,7 +28,7 @@ env:
 
 script:
   - mkdir build && cd build && cmake -DBUILD_SHARED_LIBS="${SHARED}" -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON -DENABLE_METIS=ON -DENABLE_SCOTCH=ON -DENABLE_ZLIB=ON -DENABLE_LEGION=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl .. && make -j2 && cd ..
-  - cd ../flecsi && mkdir build && cd build && cmake -DTPL_INSTALL_PREFIX=$HOME/tpl -DENABLE_PARTITION=ON -DENABLE_IO=ON -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=legion .. && make -j2 && make test
+  - cd ../flecsi && mkdir build && cd build && cmake -DCMAKE_PREFIX_PATH=$HOME/tpl -DENABLE_PARTITION=ON -DENABLE_IO=ON -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=legion .. && make -j2 && make test
 
 cache:
   - ccache
