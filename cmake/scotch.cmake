@@ -1,7 +1,7 @@
 set(SCOTCH_NAME scotch)
 set(SCOTCH_URL ${PROJECT_SOURCE_DIR}/files)
-set(SCOTCH_GZ  scotch_6.0.3-cmake.tar.gz)
-set(SCOTCH_MD5 "813a3eb5b21093e06ec935b3a8f4f9ca")
+set(SCOTCH_GZ  scotch_6.0.4-cmake.tar.gz)
+set(SCOTCH_MD5 "89e2f5a58fee907f42368d8c90c5a09e")
 
 
 find_program(FLEX flex)
