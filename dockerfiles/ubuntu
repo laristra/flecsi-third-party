@@ -1,0 +1,15 @@
+from ubuntu:latest
+
+RUN apt-get -q update -y
+RUN apt-get -qq install -y make cmake cmake-data git g++ gfortran flex
+
+RUN groupadd -r flecsi && useradd -r -m -g flecsi flecsi
+USER flecsi
+
+WORKDIR /tmp
+RUN git clone --recursive --depth=1 https://github.com/losalamos/flecsi-third-party tpl; \
+    mkdir -p tpl/build && cd tpl/build; \
+    cmake -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON \
+          -DENABLE_METIS=ON  -DENABLE_SCOTCH=ON \
+          -DENABLE_LEGION=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl .. && make -j2; \
+    cd -;

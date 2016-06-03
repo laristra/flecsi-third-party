@@ -1,39 +1,23 @@
-language: cpp
+language: generic
 
-sudo: false
+sudo: required
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-      - george-edison55-precise-backports
-    packages:
-      - ccache
-      - cmake
-      - cmake-data
-      - gcc-5
-      - g++-5
-      - gfortran-5
-
-before_install:
- - if [[ ${GVER} ]]; then export CC=gcc-${GVER}; export CXX=g++-${GVER}; export FC=gfortran-${GVER}; fi
- - git clone --recursive https://github.com/losalamos/flecsi ../flecsi
+services:
+ - docker
 
 env:
-  global:
-    - CCACHE_CPP2=yes
-    - GVER=5
   matrix:
-    - SHARED=OFF
-    - SHARED=ON
+    - DOCKERFILE=fedora
+    - DOCKERFILE=ubuntu
+#    - SHARED=OFF
+#    - SHARED=ON
 
 script:
-  - mkdir build && cd build && cmake -DBUILD_SHARED_LIBS="${SHARED}" -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON -DENABLE_METIS=ON -DENABLE_SCOTCH=ON -DENABLE_ZLIB=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl .. && make -j2 && cd ..
-  - cd ../flecsi && mkdir build && cd build && cmake -DTPL_INSTALL_PREFIX=$HOME/tpl -DENABLE_PARTITION=ON -DENABLE_IO=ON -DENABLE_UNIT_TESTS=ON .. && make -j2 && make test
+  - docker build -t flecsi/flecsi_tpl:${DOCKERFILE}
+                 -f dockerfile/${DOCKERFILE} docker/
 
-cache:
-  - ccache
-  - apt
+#  - mkdir build && cd build && cmake -DBUILD_SHARED_LIBS="${SHARED}" -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON -DENABLE_METIS=ON -DENABLE_SCOTCH=ON -DENABLE_ZLIB=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl .. && make -j2 && cd ..
+
 
 compiler:
   - gcc
