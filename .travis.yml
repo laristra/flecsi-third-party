@@ -14,7 +14,7 @@ env:
 
 script:
   - docker build -t flecsi/flecsi_tpl:${DOCKERFILE}
-                 -f dockerfile/${DOCKERFILE} docker/
+                 -f dockerfiles/${DOCKERFILE} dockerfiles/
 
 #  - mkdir build && cd build && cmake -DBUILD_SHARED_LIBS="${SHARED}" -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON -DENABLE_METIS=ON -DENABLE_SCOTCH=ON -DENABLE_ZLIB=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl .. && make -j2 && cd ..
 
