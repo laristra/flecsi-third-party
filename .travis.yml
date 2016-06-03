@@ -16,8 +16,7 @@ script:
   - docker build -t flecsi/flecsi_tpl:${DOCKERFILE}
                  -f dockerfiles/${DOCKERFILE} dockerfiles/
 
-#  - mkdir build && cd build && cmake -DBUILD_SHARED_LIBS="${SHARED}" -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON -DENABLE_METIS=ON -DENABLE_SCOTCH=ON -DENABLE_ZLIB=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl .. && make -j2 && cd ..
+# TODO: push created Docker image to DockerHub
+# - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+# - docker push flecsi/flecsi_tpl:${DOCKERFILE}
 
-
-compiler:
-  - gcc
