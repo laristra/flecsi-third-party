@@ -1,5 +1,7 @@
 from fedora:latest
 
+ARG METIS_INT64
+
 RUN dnf install -y -q make cmake git gcc-c++ gcc-gfortran flex patch
 
 RUN groupadd -r flecsi && useradd -r -m -g flecsi flecsi
@@ -10,10 +12,11 @@ RUN git clone --recursive --depth=1 https://github.com/losalamos/flecsi-third-pa
     mkdir -p tpl/build && cd tpl/build; \
     cmake -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON \
           -DENABLE_METIS=ON  -DENABLE_SCOTCH=ON \
-          -DENABLE_LEGION=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl .. && make -j2; \
+          -DENABLE_LEGION=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl \
+          -DMETIS_INT64=${METIS_INT64} .. && make -j2; \
     cd -;
 
-RUN git clone --recursive https://github.com/losalamos/flecsi ../flecsi
+RUN git clone --recursive https://github.com/losalamos/flecsi flecsi
 WORKDIR flecsi
 RUN mkdir build
 WORKDIR build
