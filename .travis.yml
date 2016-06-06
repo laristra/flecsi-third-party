@@ -9,8 +9,9 @@ env:
   matrix:
     - DOCKERFILE=fedora
     - DOCKERFILE=ubuntu
-#    - SHARED=OFF
-#    - SHARED=ON
+#    - SHARED=ON METIS_INT64=OFF
+#    - SHARED=ON METIS_INT64=ON
+
 
 script:
   - docker build -t flecsi/flecsi_tpl:${DOCKERFILE}
