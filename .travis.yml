@@ -13,10 +13,11 @@ env:
     - DOCKERFILE=ubuntu SHARED=ON METIS_INT64=ON
 
 script:
-  - docker build -t flecsi/flecsi_tpl:${DOCKERFILE}
-                 -f dockerfiles/${DOCKERFILE} dockerfiles/
-                 --build-arg SHARED=${SHARED}
+  - docker build --build-arg SHARED=${SHARED}
                  --build-arg METIS_INT64=${METIS_INT64}
+                 -t flecsi/flecsi_tpl:${DOCKERFILE}
+                 -f dockerfiles/${DOCKERFILE} dockerfiles/
+                 
 
 # TODO: push created Docker image to DockerHub
 # - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
