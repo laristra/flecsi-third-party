@@ -35,8 +35,10 @@ RUN mkdir -p build && cd build; \
     cmake -DBUILD_SHARED_LIBS=${SHARED} \
           -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON \
           -DENABLE_METIS=ON  -DENABLE_SCOTCH=ON \
-          -DENABLE_LEGION=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl .. && make -j2;
+          -DENABLE_LEGION=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl \
+          -DMETIS_INT64=${METIS_INT64} .. && make -j2;
 
+# Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /tmp
 RUN if [[ !($DOCKERHUB = ture && $TRAVIS_BRANCH = "master") ]]; then \
       git clone --recursive https://github.com/losalamos/flecsi flecsi; \
