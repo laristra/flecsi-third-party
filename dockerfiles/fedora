@@ -1,6 +1,7 @@
 from fedora:latest
 
 ARG METIS_INT64
+ARG SHARED
 
 RUN dnf install -y -q make cmake git gcc-c++ gcc-gfortran flex patch
 
