@@ -30,7 +30,7 @@ RUN if [ ${TRAVIS} = true ]; then \
       fi \
     fi
 
-RUN mkdir -p tpl/build && cd tpl/build; \
+RUN mkdir -p build && cd build; \
     cmake -DBUILD_SHARED_LIBS=${SHARED} \
           -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON \
           -DENABLE_METIS=ON  -DENABLE_SCOTCH=ON \
