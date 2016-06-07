@@ -30,7 +30,9 @@ script:
                  -f dockerfiles/${DOCKERFILE} dockerfiles/
                  
 
-# TODO: push created Docker image to DockerHub
-# - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-# - docker push flecsi/flecsi_tpl:${DOCKERFILE}
+after_success:
+  - if [[ ${DOCKERHUB} =true && ${DOCKER_EMAIL} && ${DOCKER_USERNAME} && ${DOCKER_PASSWORD} ]]; then
+      docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+      docker push flecsi/flecsi_tpl:${DOCKERFILE};
+   fi
 
