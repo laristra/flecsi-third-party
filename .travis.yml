@@ -9,12 +9,15 @@ env:
   matrix:
     - DOCKERFILE=fedora SHARED=ON METIS_INT64=OFF
     - DOCKERFILE=fedora SHARED=ON METIS_INT64=ON
+    - DOCKERFILE=fedora SHARED=ON METIS_INT64=ON DOCKERHUB=true
     - DOCKERFILE=ubuntu SHARED=ON METIS_INT64=OFF
     - DOCKERFILE=ubuntu SHARED=ON METIS_INT64=ON
+    - DOCKERFILE=ubuntu SHARED=ON METIS_INT64=ON DOCKERHUB=true
 
 script:
   - docker build --build-arg SHARED=${SHARED}
                  --build-arg METIS_INT64=${METIS_INT64}
+                 --build-arg DOCKERHUB=${DOCKERHUB}
                  --build-arg CI=${CI} --build-arg TRAVIS=${TRAVIS}
                  --build-arg TRAVIS_BRANCH=${TRAVIS_BRANCH}
                  --build-arg TRAVIS_COMMIT=${TRAVIS_COMMIT}
