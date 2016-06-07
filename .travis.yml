@@ -15,7 +15,7 @@ env:
 script:
   - docker build -t flecsi/flecsi_tpl:${DOCKERFILE}
                  -f dockerfiles/${DOCKERFILE} dockerfiles/
-                 --build-arg SHARED={SHARED}
+                 --build-arg SHARED=${SHARED}
                  --build-arg METIS_INT64=${METIS_INT64}
 
 # TODO: push created Docker image to DockerHub
