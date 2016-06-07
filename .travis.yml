@@ -18,7 +18,7 @@ script:
   - docker build --build-arg SHARED=${SHARED}
                  --build-arg METIS_INT64=${METIS_INT64}
                  --build-arg DOCKERHUB=${DOCKERHUB}
-                 --build-arg CI=${CI} --build-arg TRAVIS=${TRAVIS}
+                 --build-arg TRAVIS=${TRAVIS}
                  --build-arg TRAVIS_BRANCH=${TRAVIS_BRANCH}
                  --build-arg TRAVIS_COMMIT=${TRAVIS_COMMIT}
                  --build-arg TRAVIS_JOB_NUMBER=${TRAVIS_JOB_NUMBER}
