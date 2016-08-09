@@ -39,6 +39,8 @@ option(ENABLE_LEGION "Enable LEGION and dependencies" OFF)
 cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ON
                        "ENABLE_LEGION" OFF)
 
+option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" OFF)
+
 # build the libraries
 if(ENABLE_ZLIB)
   include(cmake/zlib.cmake)
@@ -83,3 +85,7 @@ endif(ENABLE_GASNET)
 if(ENABLE_LEGION)
   include(cmake/legion.cmake)
 endif(ENABLE_LEGION)
+
+if(ENABLE_CINCH_UTILS)
+  include(cmake/cinch-utils.cmake)
+endif(ENABLE_CINCH_UTILS)

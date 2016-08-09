@@ -7,7 +7,7 @@ ARG TRAVIS_REPO_SLUG
 ARG TRAVIS_BRANCH
 ARG TRAVIS_COMMIT
 
-RUN dnf install -y -q make cmake git gcc-c++ gcc-gfortran flex patch
+RUN dnf install -y -q make cmake git gcc-c++ gcc-gfortran flex patch doxygen pandoc python2
 
 RUN groupadd -r flecsi && useradd -r -m -g flecsi flecsi
 USER flecsi
@@ -22,13 +22,15 @@ RUN if [ ${TRAVIS} = true ]; then \
       else \
         git fetch --depth=10 "git://github.com/${TRAVIS_REPO_SLUG}" "${TRAVIS_BRANCH}"; \
         git checkout "${TRAVIS_COMMIT}"; \
-      fi \
+      fi; \
+      git submodule update --recursive; \
     fi
 
 RUN mkdir -p build && cd build; \
     cmake -DBUILD_SHARED_LIBS=ON \
           -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON \
           -DENABLE_METIS=ON  -DENABLE_SCOTCH=ON \
+          -DENABLE_CINCH_UTILS=ON \
           -DENABLE_LEGION=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl \
           -DMETIS_INT64=${METIS_INT64} .. && make -j2;
 
