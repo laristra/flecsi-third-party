@@ -41,6 +41,6 @@ RUN if true; then \
       cmake -DCMAKE_PREFIX_PATH=$HOME/tpl -DENABLE_PARTITION=ON -DENABLE_IO=ON \
             -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=legion .. && \
       make -j2 && make test && \
-      cd -; \
+      cd ../..; \
       rm -rf flecsi; \
     fi
