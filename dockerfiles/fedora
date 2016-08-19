@@ -26,7 +26,7 @@ RUN if [ ${TRAVIS} = true ]; then \
       git submodule update --recursive; \
     fi
 
-RUN mkdir -p build && cd build; \
+RUN mkdir -p build && cd build && \
     cmake -DBUILD_SHARED_LIBS=ON \
           -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON \
           -DENABLE_METIS=ON  -DENABLE_SCOTCH=ON \
@@ -36,12 +36,10 @@ RUN mkdir -p build && cd build; \
 
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /tmp
-RUN if true; then \
-      git clone --recursive https://github.com/losalamos/flecsi flecsi; \
-      cd flecsi && mkdir build && cd build && \
-      cmake -DCMAKE_PREFIX_PATH=$HOME/tpl -DENABLE_PARTITION=ON -DENABLE_IO=ON \
-            -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=legion .. && \
-      make -j2 && make test && \
-      cd ../..; \
-      rm -rf flecsi; \
-    fi
+RUN git clone --recursive https://github.com/losalamos/flecsi flecsi && \
+    cd flecsi && mkdir build && cd build && \
+    cmake -DCMAKE_PREFIX_PATH=$HOME/tpl -DENABLE_PARTITION=ON -DENABLE_IO=ON \
+         -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=legion .. && \
+    make -j2 && make test && \
+    cd ../.. && \
+    rm -rf flecsi;
