@@ -8,7 +8,7 @@ ARG TRAVIS_BRANCH
 ARG TRAVIS_COMMIT
 
 RUN apt-get -q update -y
-RUN apt-get -qq install -y make cmake cmake-data git g++ gfortran flex doxygen pandoc python2.7
+RUN apt-get -qq install -y make cmake cmake-data git g++ gfortran flex doxygen pandoc python2.7 libopenmpi-dev
 
 RUN groupadd -r flecsi && useradd -r -m -g flecsi flecsi
 USER flecsi
