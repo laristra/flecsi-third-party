@@ -4,3 +4,6 @@
 [submodule "cinch-utils"]
 	path = cinch-utils
 	url = ../cinch-utils.git
+[submodule "cereal"]
+	path = cereal
+	url = ../../USCiLab/cereal.git
