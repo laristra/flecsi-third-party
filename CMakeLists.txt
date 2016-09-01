@@ -81,6 +81,8 @@ if(ENABLE_LAPACK)
 endif(ENABLE_LAPACK)
 
 if(ENABLE_GASNET)
+  set(GASNET_CODNUIT "udp" CACHE STRING
+  "Select Gasnet conduit [udp, ibv, mpi]")
   include(cmake/gasnet.cmake)
 endif(ENABLE_GASNET)
 
