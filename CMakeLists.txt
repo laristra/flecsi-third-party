@@ -80,9 +80,14 @@ if(ENABLE_LAPACK)
   install(SCRIPT scripts/lapack_post_install.cmake)
 endif(ENABLE_LAPACK)
 
+#if(ENABLE_GASNET)
+#endif(ENABLE_GASNET)
+
 if(ENABLE_GASNET)
-  set(GASNET_CODNUIT "udp" CACHE STRING
+  set(GASNet_CONDUIT "udp" CACHE STRING
   "Select Gasnet conduit [udp, ibv, mpi]")
+  set(GASNet_ROOT_DIR "blah" CACHE STRING
+  "Specify Gasnet root directory")
   include(cmake/gasnet.cmake)
 endif(ENABLE_GASNET)
 
