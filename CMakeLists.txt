@@ -41,7 +41,7 @@ cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ON
 
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" OFF)
 
-option(ENABLE_CEREAL "Enable Cereal C++ serialization library" ON)
+option(ENABLE_CEREAL "Enable Cereal C++ serialization library" OFF)
 
 # build the libraries
 if(ENABLE_ZLIB)
