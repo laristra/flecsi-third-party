@@ -32,6 +32,7 @@ RUN mkdir -p build && cd build && \
           -DENABLE_EXODUS=ON -DENABLE_LAPACK=ON \
           -DENABLE_METIS=ON  -DENABLE_SCOTCH=ON \
           -DENABLE_CINCH_UTILS=ON \
+          -DENABLE_CEREAL=ON \
           -DENABLE_LEGION=ON -DCMAKE_INSTALL_PREFIX=$HOME/tpl \
           -DMETIS_INT64=${METIS_INT64} .. && make -j2;
 
