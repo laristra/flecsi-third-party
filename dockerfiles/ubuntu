@@ -1,4 +1,4 @@
-from ubuntu:latest
+FROM flecsi/flecsi-buildenv:ubuntu
 
 ARG METIS_INT64
 ARG TRAVIS
@@ -7,13 +7,6 @@ ARG TRAVIS_REPO_SLUG
 ARG TRAVIS_BRANCH
 ARG TRAVIS_COMMIT
 
-RUN apt-get -q update -y
-RUN apt-get -qq install -y make cmake cmake-data git g++ gfortran flex doxygen pandoc python2.7 libopenmpi-dev
-
-RUN groupadd -r flecsi && useradd -r -m -g flecsi flecsi
-USER flecsi
-
-WORKDIR /tmp
 RUN git clone --recursive --depth=1 https://github.com/losalamos/flecsi-third-party tpl
 WORKDIR tpl
 RUN if [ ${TRAVIS} = true ]; then \
@@ -37,7 +30,7 @@ RUN mkdir -p build && cd build && \
           -DMETIS_INT64=${METIS_INT64} .. && make -j2 VERBOSE=1;
 
 # Build FleCSI if it is not for DockerHub and master branch
-WORKDIR /tmp
+WORKDIR /home/flecsi
 RUN git clone --recursive https://github.com/losalamos/flecsi flecsi && \
     cd flecsi && mkdir build && cd build && \
     cmake -DCMAKE_PREFIX_PATH=$HOME/tpl -DENABLE_PARTITION=ON -DENABLE_IO=ON \
