@@ -20,4 +20,5 @@ ExternalProject_Add(${LEGION_NAME}
    -DGASNet_ROOT_DIR:STRING=${GASNet_ROOT_DIR}
    -DLegion_USE_GASNet=ON
    <SOURCE_DIR>
+   LOG_BUILD 1
 )

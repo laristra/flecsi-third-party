@@ -15,4 +15,5 @@ ExternalProject_Add(${GASNET_NAME}
  URL ${GASNET_URL}/${GASNET_GZ}
  URL_MD5 ${GASNET_MD5}
  CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${CMAKE_INSTALL_PREFIX}  ${CONF_OPTS} --disable-ibv --enable-par --disable-aligned-segments  --enable-mpi-compat --enable-segment-fast --disable-aligned-segments --disable-pshm --with-segment-mmap-max=4GB "CC=${CMAKE_C_COMPILER} -fPIC" "CXX=${CMAKE_CXX_COMPILER} -fPIC" "MPI_CC=mpicc -fPIC"
+ LOG_BUILD 1
 )
