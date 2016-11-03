@@ -7,7 +7,7 @@ endif()
 ExternalProject_Add(${LEGION_NAME}
  DEPENDS ${GASNET_NAME}
  SOURCE_DIR ${PROJECT_SOURCE_DIR}/legion
- PATCH_COMMAND sed -i -e "s/else$/&()/" -e "s/ _sort_list_by_preference/#&/" cmake/FindGASNet.cmake
+ PATCH_COMMAND sed -i "s/ _sort_list_by_preference/#&/" cmake/FindGASNet.cmake
  CONFIGURE_COMMAND ${CMAKE_COMMAND}
    -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
    -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}
