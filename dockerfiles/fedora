@@ -34,6 +34,7 @@ WORKDIR /home/flecsi
 RUN git clone --recursive https://github.com/losalamos/flecsi flecsi && \
     cd flecsi && mkdir build && cd build && \
     cmake -DCMAKE_PREFIX_PATH=$HOME/tpl -DENABLE_PARTITION=ON -DENABLE_IO=ON \
+         -DENABLE_MPI=ON \
          -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=legion .. && \
     make -j2 && make test && \
     cd ../.. && \
