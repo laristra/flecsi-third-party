@@ -13,7 +13,7 @@ HDF5 requires CMake >= 3.1.0
 
 % module load compilers/gcc/5.2.0
 
-% git clone git@github.com:flecsi/third-party.git
+% git clone git@github.com:losalamos/flecsi-third-party.git
 
 % cd third-party
 
