@@ -7,3 +7,6 @@
 [submodule "cereal"]
 	path = cereal
 	url = ../../USCiLab/cereal.git
+[submodule "cinch"]
+	path = cinch
+	url = ../cinch.git
