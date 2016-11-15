@@ -30,6 +30,7 @@ cmake_dependent_option(ENABLE_NETCDF "Enable HDF5" ON
                        "ENABLE_EXODUS" OFF)
 cmake_dependent_option(ENABLE_SZIP "Enable szip" ON
                        "ENABLE_HDF5" OFF)
+<<<<<<< Updated upstream
 if(EXODUSII_FOUND AND ENABLE_EXODUS)
   message(FATAL_ERROR "System Exodus library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_EXODUSII=ON to force it")
 endif(EXODUSII_FOUND AND ENABLE_EXODUS)
@@ -52,6 +53,15 @@ endif(METIS_FOUND AND ENABLE_METIS)
 find_package(SCOTCH)
 STRING(COMPARE EQUAL ${SCOTCH_FOUND} FALSE ENABLE_SCOTCH_DEFAULT)
 option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" ${ENABLE_SCOTCH_DEFAULT})
+=======
+
+option(ENABLE_LAPACK "Enable LAPACK and dependencies" OFF)
+
+option(ENABLE_METIS "Enable METIS and dependencies" OFF)
+option(METIS_INT64 "Build METIS with int64 support" OFF)
+
+option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" OFF)
+>>>>>>> Stashed changes
 cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ON
                        "ENABLE_HDF5 OR ENABLE_SCOTCH" OFF)
 if(SCOTCH_FOUND AND ENABLE_SCOTCH)
