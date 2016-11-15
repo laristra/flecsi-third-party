@@ -1,9 +1,5 @@
 set(LEGION_NAME legion)
 
-if(ENABLE_GASNET)
-  set(GASNet_ROOT_DIR ${CMAKE_INSTALL_PREFIX})
-endif()
-
 ExternalProject_Add(${LEGION_NAME}
  DEPENDS ${GASNET_NAME}
  SOURCE_DIR ${PROJECT_SOURCE_DIR}/legion
