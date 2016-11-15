@@ -17,5 +17,4 @@ ExternalProject_Add(${LEGION_NAME}
    -DLegion_USE_GASNet=ON
    -DLegion_BUILD_EXAMPLES=ON
    <SOURCE_DIR>
-   LOG_BUILD 1
 )
