@@ -1,4 +1,4 @@
-language: generic
+language: c 
 
 sudo: required
 
@@ -13,6 +13,7 @@ env:
     - DOCKERFILE=ubuntu SHARED=ON METIS_INT64=ON DOCKERHUB=true
 
 script:
+  - mv -v ${HOME}/.ccache dockerfiles/ccache
   - docker build --build-arg METIS_INT64=${METIS_INT64}
                  --build-arg TRAVIS=${TRAVIS}
                  --build-arg TRAVIS_BRANCH=${TRAVIS_BRANCH}
@@ -21,6 +22,7 @@ script:
                  --build-arg TRAVIS_REPO_SLUG=${TRAVIS_REPO_SLUG}
                  -t flecsi/flecsi_tpl:${DOCKERFILE}
                  -f dockerfiles/${DOCKERFILE} dockerfiles/
+  - CON=$(docker run -d flecsi/flecsi_tpl:${DOCKERFILE} /bin/bash) && docker cp ${CON}:/home/flecsi/.ccache ${HOME}/
 
 after_success:
   - if [[ ${DOCKERHUB} = true && ${DOCKER_EMAIL} && ${DOCKER_USERNAME} && ${DOCKER_PASSWORD} && ${TRAVIS_PULL_REQUEST} == false && ${TRAVIS_BRANCH} == master ]]; then
@@ -28,3 +30,5 @@ after_success:
       docker push "flecsi/flecsi_tpl:${DOCKERFILE}";
    fi
 
+cache:
+  - ccache
