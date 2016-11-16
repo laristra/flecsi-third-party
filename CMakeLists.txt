@@ -138,8 +138,15 @@ if(ENABLE_GASNET)
   find_package(GASNet)
   if(GASNet_FOUND)
     message("System GASNet library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_GASNet=ON to force it")
+    #workaround for StanfordLegion/legion#210 on Fedora
+    if(DEFINED ENV{MPI_LIB})
+      set(Legion_GASNet_OPTS
+       -DGASNet_mpi-par_LIBRARY=$ENV{MPI_LIB}/libgasnet-mpi-par.so
+       -DGASNet_gasnet_tools-par_LIBRARY=$ENV{MPI_LIB}/libgasnet_tools-par.so
+      )
+    endif()
   else()
-    set(GASNet_ROOT_DIR ${CMAKE_INSTALL_PREFIX})
+    set(Legion_GASNet_OPTS -DGASNet_ROOT_DIR=${CMAKE_INSTALL_PREFIX})
     include(cmake/gasnet.cmake)
   endif()
 endif(ENABLE_GASNET)
