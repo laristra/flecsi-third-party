@@ -13,16 +13,16 @@ env:
     - DOCKERFILE=ubuntu SHARED=ON METIS_INT64=ON DOCKERHUB=true
 
 script:
-  - mv -v ${HOME}/.ccache dockerfiles/ccache
+  - cp -vr dockerfiles ${HOME}/docker
+  - ln -s ${DOCKERFILE} ${HOME}/docker/Dockerfile
+  - cd ../../
+  - mv -v ${TRAVIS_REPO_SLUG} $HOME/docker
+  - cp -r ${HOME}/.ccache ${HOME}/docker/ccache
   - docker build --build-arg METIS_INT64=${METIS_INT64}
-                 --build-arg TRAVIS=${TRAVIS}
-                 --build-arg TRAVIS_BRANCH=${TRAVIS_BRANCH}
-                 --build-arg TRAVIS_COMMIT=${TRAVIS_COMMIT}
-                 --build-arg TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST}
-                 --build-arg TRAVIS_REPO_SLUG=${TRAVIS_REPO_SLUG}
-                 -t flecsi/flecsi_tpl:${DOCKERFILE}
-                 -f dockerfiles/${DOCKERFILE} dockerfiles/
-  - CON=$(docker run -d flecsi/flecsi_tpl:${DOCKERFILE} /bin/bash) && docker cp ${CON}:/home/flecsi/.ccache ${HOME}/
+                 -t flecsi/flecsi_tpl:${DOCKERFILE} ${HOME}/docker/ &&
+    rm -rf ${HOME}/.ccache &&
+    CON=$(docker run -d flecsi/flecsi_tpl:${DOCKERFILE} /bin/bash) &&
+    docker cp ${CON}:/home/flecsi/.ccache ${HOME}/
 
 after_success:
   - if [[ ${DOCKERHUB} = true && ${DOCKER_EMAIL} && ${DOCKER_USERNAME} && ${DOCKER_PASSWORD} && ${TRAVIS_PULL_REQUEST} == false && ${TRAVIS_BRANCH} == master ]]; then
