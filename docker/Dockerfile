@@ -3,16 +3,18 @@ FROM flecsi/flecsi-buildenv:fedora
 COPY flecsi-third-party/ /home/flecsi/tpl
 COPY ccache/ /home/flecsi/.ccache
 USER root
-RUN chown -R flecsi:flecsi /home/flecsi/tpl /home/flecsi/.ccache
+RUN chown -R flecsi:flecsi /home/flecsi/tpl /home/flecsi/.ccache /usr/local
 USER flecsi
 
 WORKDIR /home/flecsi/tpl
-RUN ccache -z
 RUN mkdir -p build && cd build && \
     cmake -DBUILD_SHARED_LIBS=ON \
           -DENABLE_CINCH_UTILS=ON \
           .. && make -j2;
-RUN ccache -s
+
+USER root
+RUN chown -R root:root /usr/local
+USER flecsi
 
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi

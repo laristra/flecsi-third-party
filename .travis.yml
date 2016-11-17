@@ -15,11 +15,13 @@ script:
   - sed -i "1s/fedora/${DISTRO}/" ${HOME}/docker/Dockerfile
   - cd ../../
   - mv -v ${TRAVIS_REPO_SLUG} $HOME/docker
+  - ccache -z
   - cp -r ${HOME}/.ccache ${HOME}/docker/ccache
   - docker build -t flecsi/flecsi_tpl:${DISTRO} ${HOME}/docker/ &&
     rm -rf ${HOME}/.ccache &&
     CON=$(docker run -d flecsi/flecsi_tpl:${DISTRO} /bin/bash) &&
     docker cp ${CON}:/home/flecsi/.ccache ${HOME}/
+  - ccache -s
 
 after_success:
   - if [[ ${DOCKERHUB} = true && ${DOCKER_EMAIL} && ${DOCKER_USERNAME} && ${DOCKER_PASSWORD} && ${TRAVIS_PULL_REQUEST} == false && ${TRAVIS_BRANCH} == master ]]; then
