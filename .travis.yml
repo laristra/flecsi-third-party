@@ -13,7 +13,7 @@ env:
     - DOCKERFILE=ubuntu METIS_INT64=ON DOCKERHUB=true
 
 script:
-  - cp -vr dockerfiles ${HOME}/docker
+  - cp -vr docker ${HOME}/docker
   - ln -s ${DOCKERFILE} ${HOME}/docker/Dockerfile
   - cd ../../
   - mv -v ${TRAVIS_REPO_SLUG} $HOME/docker
