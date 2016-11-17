@@ -5,12 +5,6 @@ include(ExternalProject)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cinch/cmake)
 
-# installation path for third party libraries
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set (CMAKE_INSTALL_PREFIX /path/to/install/third/party CACHE PATH
-  "default install path" FORCE)
-endif()
-
 option(BUILD_SHARED_LIBS "Build shared libs" ON)
 if(BUILD_SHARED_LIBS)
     set(CMAKE_LIBRARY_PREFIX ${CMAKE_SHARED_LIBRARY_PREFIX})
