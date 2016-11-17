@@ -14,7 +14,7 @@ RUN mkdir -p build && cd build && \
     cmake -DBUILD_SHARED_LIBS=ON \
           -DENABLE_CINCH_UTILS=ON \
           -DCMAKE_INSTALL_PREFIX=$HOME/tpl \
-          -DMETIS_INT64=${METIS_INT64} .. && make -j2 VERBOSE=1;
+          -DMETIS_INT64=${METIS_INT64} .. && make -j2;
 RUN ccache -s
 
 # Build FleCSI if it is not for DockerHub and master branch
