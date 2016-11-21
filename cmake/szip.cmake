@@ -4,7 +4,7 @@ set(SZIP_URL ${PROJECT_SOURCE_DIR}/files)
 set(SZIP_TGZ SZip.tar.gz)
 set(SZIP_MD5 "a966afca7fb9f9cc65568f35a7037f57")
 
-message("-- Building ${SZIP_NAME}")
+message(STATUS "Building ${SZIP_NAME}")
 ExternalProject_Add(${SZIP_NAME}
   URL ${SZIP_URL}/${SZIP_TGZ}
   URL_MD5 ${SZIP_MD5}

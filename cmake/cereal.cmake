@@ -1,6 +1,6 @@
 set(CEREAL_NAME cereal)
 
-message("-- Building ${CEREAL_NAME}")
+message(STATUS "Building ${CEREAL_NAME}")
 ExternalProject_Add(${CEREAL_NAME}
  DEPENDS ${GASNET_NAME}
  SOURCE_DIR ${PROJECT_SOURCE_DIR}/cereal

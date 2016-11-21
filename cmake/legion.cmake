@@ -1,6 +1,6 @@
 set(LEGION_NAME legion)
 
-message("-- Building ${LEGION_NAME}")
+message(STATUS "Building ${LEGION_NAME}")
 ExternalProject_Add(${LEGION_NAME}
  DEPENDS ${GASNET_NAME}
  SOURCE_DIR ${PROJECT_SOURCE_DIR}/legion

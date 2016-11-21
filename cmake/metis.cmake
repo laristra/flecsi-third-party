@@ -8,7 +8,7 @@ if(METIS_INT64)
    set(PATCH_COMMAND patch -p0 < ${PROJECT_SOURCE_DIR}/patches/metis-5.1.0-datatype.patch)
 endif(METIS_INT64)
 
-message("-- Building ${METIS_NAME}")
+message(STATUS "Building ${METIS_NAME}")
 ExternalProject_Add(${METIS_NAME}
  URL ${METIS_URL}/${METIS_GZ}
  URL_MD5 ${METIS_MD5}

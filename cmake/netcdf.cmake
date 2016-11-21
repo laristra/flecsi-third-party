@@ -3,7 +3,7 @@ set(NETCDF_URL ${PROJECT_SOURCE_DIR}/files)
 set(NETCDF_GZ  netcdf-4.3.3.1.tar.gz )
 set(NETCDF_MD5 "5c9dad3705a3408d27f696e5b31fb88c" )
 
-message("-- Building ${NETCDF_NAME}")
+message(STATUS "Building ${NETCDF_NAME}")
 ExternalProject_Add(${NETCDF_NAME}
   DEPENDS
   URL ${NETCDF_URL}/${NETCDF_GZ}
