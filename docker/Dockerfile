@@ -1,5 +1,7 @@
 FROM flecsi/flecsi-buildenv:fedora
 
+ARG SYSTEM_LIBS
+
 COPY flecsi-third-party/ /home/flecsi/tpl
 COPY ccache/ /home/flecsi/.ccache
 USER root
@@ -9,7 +11,7 @@ USER flecsi
 WORKDIR /home/flecsi/tpl
 RUN mkdir -p build && cd build && \
     cmake -DBUILD_SHARED_LIBS=ON \
-          -DENABLE_CINCH_UTILS=ON \
+          -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
           .. && make -j2;
 
 USER root

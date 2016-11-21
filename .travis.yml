@@ -7,8 +7,10 @@ services:
 
 env:
   matrix:
-    - DISTRO=fedora DOCKERHUB=true
-    - DISTRO=ubuntu DOCKERHUB=true
+    - DISTRO=fedora SYSTEM_LIBS=OFF
+    - DISTRO=fedora SYSTEM_LIBS=ON DOCKERHUB=true
+    - DISTRO=ubuntu SYSTEM_LIBS=OFF
+    - DISTRO=ubuntu SYSTEM_LIBS=ON DOCKERHUB=true
 
 script:
   - cp -vr docker ${HOME}/docker
@@ -17,7 +19,8 @@ script:
   - mv -v ${TRAVIS_REPO_SLUG} $HOME/docker
   - ccache -z
   - cp -r ${HOME}/.ccache ${HOME}/docker/ccache
-  - docker build -t flecsi/flecsi_tpl:${DISTRO} ${HOME}/docker/ &&
+  - docker build --build-arg SYSTEM_LIBS=${SYSTEM_LIBS}
+                  -t flecsi/flecsi_tpl:${DISTRO} ${HOME}/docker/ &&
     rm -rf ${HOME}/.ccache &&
     CON=$(docker run -d flecsi/flecsi_tpl:${DISTRO} /bin/bash) &&
     docker cp ${CON}:/home/flecsi/.ccache ${HOME}/

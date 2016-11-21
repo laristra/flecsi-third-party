@@ -3,6 +3,7 @@ set(EXODUS_URL ${PROJECT_SOURCE_DIR}/files)
 set(EXODUS_GZ  exodus-6.09.tar.gz)
 set(EXODUS_MD5 "2c139fc98706a04778d5607ab80b5d4d")
 
+message("-- Building ${EXODUS_NAME}")
 ExternalProject_Add(${EXODUS_NAME}
  DEPENDS ${NETCDF_NAME}
  URL ${EXODUS_URL}/${EXODUS_GZ}

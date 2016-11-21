@@ -4,6 +4,7 @@ set(LAPACK_URL ${PROJECT_SOURCE_DIR}/files)
 set(LAPACK_TAR lapack-3.6.0.tar)
 set(LAPACK_MD5 "bab11fba46e31e780f8ea0ffa0815928")
 
+message("-- Building ${LAPACK_NAME}")
 ExternalProject_Add(${LAPACK_NAME}
   URL ${LAPACK_URL}/${LAPACK_TAR}
   URL_MD5 ${LAPACK_MD5}

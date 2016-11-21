@@ -11,6 +11,7 @@ else()
   message (ERROR "wrong Gasnet conduit specified")
 endif ()
  
+message("-- Building ${GASNET_NAME}")
 ExternalProject_Add(${GASNET_NAME}
  URL ${GASNET_URL}/${GASNET_GZ}
  URL_MD5 ${GASNET_MD5}

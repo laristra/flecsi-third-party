@@ -1,5 +1,6 @@
 set(CINCH_UTILS_NAME cinch-utils)
 
+message("-- Building ${CINCH_UTILS_NAME}")
 ExternalProject_Add(${CINCH_UTILS_NAME}
  DEPENDS ${GASNET_NAME}
  SOURCE_DIR ${PROJECT_SOURCE_DIR}/cinch-utils

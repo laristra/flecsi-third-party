@@ -14,98 +14,94 @@ else()
     set(CMAKE_LIBRARY_SUFFIX ${CMAKE_STATIC_LIBRARY_SUFFIX})
 endif()
 
+option(USE_SYSTEM_LIBS "Check for system libraries and use them if found" OFF)
+if(USE_SYSTEM_LIBS)
+  find_package(EXODUSII)
+  string(COMPARE EQUAL ${EXODUSII_FOUND} FALSE ENABLE_EXODUS_DEFAULT)
+  find_package(LAPACKE)
+  string(COMPARE EQUAL ${LAPACKE_FOUND} FALSE ENABLE_LAPACK_DEFAULT)
+  find_package(METIS 5.1)
+  string(COMPARE EQUAL ${METIS_FOUND} FALSE ENABLE_METIS_DEFAULT)
+  find_package(SCOTCH)
+  string(COMPARE EQUAL ${SCOTCH_FOUND} FALSE ENABLE_SCOTCH_DEFAULT)
+  find_package(Legion)
+  string(COMPARE EQUAL ${Legion_FOUND} FALSE ENABLE_LEGION_DEFAULT)
+  find_package (Cereal)
+  string(COMPARE EQUAL ${Cereal_FOUND} FALSE ENABLE_CEREAL_DEFAULT)
+  find_package(ZLIB)
+  string(COMPARE EQUAL ${ZLIB_FOUND} FALSE ENABLE_ZLIB_DEFAULT)
+  find_package(SZIP)
+  string(COMPARE EQUAL ${SZIP_FOUND} FALSE ENABLE_SZIP_DEFAULT)
+  find_package(HDF5)
+  string(COMPARE EQUAL ${HDF5_FOUND} FALSE ENABLE_HDF5_DEFAULT)
+  find_package(NetCDF)
+  string(COMPARE EQUAL ${NetCDF_FOUND} FALSE ENABLE_NETCF_DEFAULT)
+  find_package(GASNet)
+  string(COMPARE EQUAL ${GASNet_FOUND} FALSE ENABLE_GASNET_DEFAULT)
+  #workaround for StanfordLegion/legion#210 on Fedora
+  if(GASNet_FOUND AND DEFINED ENV{MPI_LIB})
+      set(Legion_GASNet_OPTS
+       -DGASNet_mpi-par_LIBRARY=$ENV{MPI_LIB}/libgasnet-mpi-par.so
+       -DGASNet_gasnet_tools-par_LIBRARY=$ENV{MPI_LIB}/libgasnet_tools-par.so
+      )
+  endif()
+else(USE_SYSTEM_LIBS)
+  set(ENABLE_EXODUS_DEFAULT ON)
+  set(ENABLE_LAPACK_DEFAULT ON)
+  set(ENABLE_METIS_DEFAULT ON)
+  set(ENABLE_SCOTCH_DEFAULT ON)
+  set(ENABLE_LEGION_DEFAULT ON)
+  set(ENABLE_CEREAL_DEFAULT ON)
+  set(ENABLE_ZLIB_DEFAULT ON)
+  set(ENABLE_SZIP_DEFAULT ON)
+  set(ENABLE_HDF5_DEFAULT ON)
+  set(ENABLE_NETCF_DEFAULT ON)
+  set(ENABLE_GASNET_DEFAULT ON)
+endif(USE_SYSTEM_LIBS)
+
 # third party libraries to build
-find_package(EXODUSII)
-STRING(COMPARE EQUAL ${EXODUSII_FOUND} FALSE ENABLE_EXODUS_DEFAULT)
 option(ENABLE_EXODUS "Enable Exodus and dependencies" ${ENABLE_EXODUS_DEFAULT}) 
-cmake_dependent_option(ENABLE_HDF5 "Enable HDF5" ON
+cmake_dependent_option(ENABLE_HDF5 "Enable HDF5" ${ENABLE_HDF5_DEFAULT}
                        "ENABLE_EXODUS" OFF)
-cmake_dependent_option(ENABLE_NETCDF "Enable HDF5" ON
+cmake_dependent_option(ENABLE_NETCDF "Enable HDF5" ${ENABLE_NETCF_DEFAULT}
                        "ENABLE_EXODUS" OFF)
-cmake_dependent_option(ENABLE_SZIP "Enable szip" ON
+cmake_dependent_option(ENABLE_SZIP "Enable szip" ${ENABLE_SZIP_DEFAULT}
                        "ENABLE_HDF5" OFF)
 
-if(EXODUSII_FOUND AND ENABLE_EXODUS)
-  message(WARNING "System Exodus library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_EXODUSII=ON to force it")
-endif(EXODUSII_FOUND AND ENABLE_EXODUS)
-
-find_package(LAPACKE)
-STRING(COMPARE EQUAL ${LAPACKE_FOUND} FALSE ENABLE_LAPACK_DEFAULT)
 option(ENABLE_LAPACK "Enable LAPACK and dependencies" ${ENABLE_LAPACK_DEFAULT})
-if(LAPACKE_FOUND AND ENABLE_LAPACK)
-  message(WARNING "System Lapacke library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_LAPACKE=ON to force it")
-endif(LAPACKE_FOUND AND ENABLE_LAPACK)
 
-find_package(METIS 5.1)
-STRING(COMPARE EQUAL ${METIS_FOUND} FALSE ENABLE_METIS_DEFAULT)
 option(ENABLE_METIS "Enable METIS and dependencies" ${ENABLE_METIS_DEFAULT})
-if(METIS_FOUND AND ENABLE_METIS)
-  message(WARNING "System metis library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_METIS=ON to force it")
-endif(METIS_FOUND AND ENABLE_METIS)
 option(METIS_INT64 "Build METIS with int64 support" OFF)
 
-find_package(SCOTCH)
-STRING(COMPARE EQUAL ${SCOTCH_FOUND} FALSE ENABLE_SCOTCH_DEFAULT)
 option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" ${ENABLE_SCOTCH_DEFAULT})
-cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ON
+cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ${ENABLE_ZLIB_DEFAULT}
                        "ENABLE_HDF5 OR ENABLE_SCOTCH" OFF)
-if(SCOTCH_FOUND AND ENABLE_SCOTCH)
-  message(WARNING "System scotch library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_SCOTCH=ON to force it")
-endif(SCOTCH_FOUND AND ENABLE_SCOTCH)
 
-find_package(Legion)
-STRING(COMPARE EQUAL ${Legion_FOUND} FALSE ENABLE_LEGION_DEFAULT)
 option(ENABLE_LEGION "Enable LEGION and dependencies" ${ENABLE_LEGION_DEFAULT})
-cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ON
+cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ${ENABLE_GASNET_DEFAULT}
                        "ENABLE_LEGION" OFF)
-if(Legion_FOUND AND ENABLE_LEGION)
-  message(WARNING "System legion library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_LEGION=ON to force it")
-endif(Legion_FOUND AND ENABLE_LEGION)
+#legion uses that option, too	    
+set(GASNet_CONDUIT "mpi" CACHE STRING "Select Gasnet conduit [udp, mpi]")
 
-option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" OFF)
+option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
-find_package (Cereal)
-STRING(COMPARE EQUAL ${Cereal_FOUND} FALSE ENABLE_CEREAL_DEFAULT)
 option(ENABLE_CEREAL "Enable Cereal C++ serialization library" ${ENABLE_CEREAL_DEFAULT})
-if(Cereal_FOUND AND ENABLE_CEREAL)
-  message(WARNING "System cereal library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_Cereal=ON to force it")
-endif(Cereal_FOUND AND ENABLE_CEREAL)
 
 # build the libraries
 if(ENABLE_ZLIB)
-  find_package(ZLIB)
-  if(ZLIB_FOUND)
-    message("System z library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_ZLIB=ON to force it")
-  else()
-    include(cmake/zlib.cmake)
-  endif()
+  include(cmake/zlib.cmake)
 endif(ENABLE_ZLIB)
 
 if(ENABLE_SZIP)
-  find_package(SZIP)
-  if(SZIP_FOUND)
-    message("System szip library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_SZIP=ON to force it")
-  else()
-    include(cmake/szip.cmake)
-  endif()
+  include(cmake/szip.cmake)
 endif(ENABLE_SZIP)
 
 if(ENABLE_HDF5)
-  find_package(HDF5)
-  if(HDF5_FOUND)
-    message("System hdf5 library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_HDF5=ON to force it")
-  else()
-    include(cmake/hdf5.cmake)
-  endif()
+  include(cmake/hdf5.cmake)
 endif(ENABLE_HDF5)
 
 if(ENABLE_NETCDF)
-  find_package(NetCDF)
-  if(NetCDF_FOUND)
-    message("System netcdf library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_NetCDF=ON to force it")
-  else()
-    include(cmake/netcdf.cmake)
-  endif()
+  include(cmake/netcdf.cmake)
 endif(ENABLE_NETCDF)
 
 if(ENABLE_EXODUS)
@@ -129,24 +125,13 @@ if(ENABLE_LAPACK)
 endif(ENABLE_LAPACK)
 
 if(ENABLE_GASNET)
-  set(GASNet_CONDUIT "mpi" CACHE STRING "Select Gasnet conduit [udp, mpi]")
-  find_package(GASNet)
-  if(GASNet_FOUND)
-    message("System GASNet library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_GASNet=ON to force it")
-    #workaround for StanfordLegion/legion#210 on Fedora
-    if(DEFINED ENV{MPI_LIB})
-      set(Legion_GASNet_OPTS
-       -DGASNet_mpi-par_LIBRARY=$ENV{MPI_LIB}/libgasnet-mpi-par.so
-       -DGASNet_gasnet_tools-par_LIBRARY=$ENV{MPI_LIB}/libgasnet_tools-par.so
-      )
-    endif()
-  else()
-    set(Legion_GASNet_OPTS -DGASNet_ROOT_DIR=${CMAKE_INSTALL_PREFIX})
-    include(cmake/gasnet.cmake)
-  endif()
+  include(cmake/gasnet.cmake)
 endif(ENABLE_GASNET)
 
 if(ENABLE_LEGION)
+  if(ENABLE_GASNET)
+    set(Legion_GASNet_OPTS -DGASNet_ROOT_DIR=${CMAKE_INSTALL_PREFIX})
+  endif()
   include(cmake/legion.cmake)
 endif(ENABLE_LEGION)
 

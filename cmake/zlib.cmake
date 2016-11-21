@@ -4,6 +4,7 @@ set(ZLIB_URL ${PROJECT_SOURCE_DIR}/files)
 set(ZLIB_TGZ ZLib.tar.gz)
 set(ZLIB_MD5 "10c092840e53a2bfb64fca0a4634ea0b")
 
+message("-- Building ${ZLIB_NAME}")
 ExternalProject_Add(${ZLIB_NAME}
   URL ${ZLIB_URL}/${ZLIB_TGZ}
   URL_MD5 ${ZLIB_MD5}

@@ -3,6 +3,7 @@ set(HDF5_URL ${PROJECT_SOURCE_DIR}/files)
 set(HDF5_GZ hdf5-1.8.15-patch1.tar.gz)
 set(HDF5_MD5 "4467c25ed9c0b126b194a4d9d66c29ac")
 
+message("-- Building ${HDF5_NAME}")
 ExternalProject_Add(${HDF5_NAME}
   DEPENDS ${ZLIB_PACKAGE_NAME} ${SZIP_PACKAGE_NAME}
   URL ${HDF5_URL}/${HDF5_GZ}

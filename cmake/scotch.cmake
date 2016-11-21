@@ -10,6 +10,7 @@ if (NOT FLEX)
             "'flex' lexical parser not found. Cannot build scotch." )
 endif()
 
+message("-- Building ${SCOTCH_NAME}")
 ExternalProject_Add( ${SCOTCH_NAME}
  DEPENDS ${ZLIB_PACKAGE_NAME}
 
