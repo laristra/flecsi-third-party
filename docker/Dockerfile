@@ -1,27 +1,26 @@
-FROM flecsi/flecsi-buildenv:ubuntu
-
-ARG METIS_INT64
+FROM flecsi/flecsi-buildenv:fedora
 
 COPY flecsi-third-party/ /home/flecsi/tpl
 COPY ccache/ /home/flecsi/.ccache
 USER root
-RUN chown -R flecsi:flecsi /home/flecsi/tpl /home/flecsi/.ccache
+RUN chown -R flecsi:flecsi /home/flecsi/tpl /home/flecsi/.ccache /usr/local
 USER flecsi
 
 WORKDIR /home/flecsi/tpl
-RUN ccache -z
 RUN mkdir -p build && cd build && \
     cmake -DBUILD_SHARED_LIBS=ON \
           -DENABLE_CINCH_UTILS=ON \
-          -DCMAKE_INSTALL_PREFIX=$HOME/tpl \
-          -DMETIS_INT64=${METIS_INT64} .. && make -j2 VERBOSE=1;
-RUN ccache -s
+          .. && make -j2;
+
+USER root
+RUN chown -R root:root /usr/local
+USER flecsi
 
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
-RUN git clone --recursive https://github.com/losalamos/flecsi flecsi && \
+RUN git clone --depth 1 --recursive https://github.com/losalamos/flecsi flecsi && \
     cd flecsi && mkdir build && cd build && \
-    cmake -DCMAKE_PREFIX_PATH=$HOME/tpl -DENABLE_PARTITION=ON -DENABLE_IO=ON \
+    cmake -DENABLE_PARTITION=ON -DENABLE_IO=ON \
          -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=legion .. && \
     make -j2 && make test && \
     cd ../.. && \

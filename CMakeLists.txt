@@ -5,12 +5,6 @@ include(ExternalProject)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cinch/cmake)
 
-# installation path for third party libraries
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set (CMAKE_INSTALL_PREFIX /path/to/install/third/party CACHE PATH
-  "default install path" FORCE)
-endif()
-
 option(BUILD_SHARED_LIBS "Build shared libs" ON)
 if(BUILD_SHARED_LIBS)
     set(CMAKE_LIBRARY_PREFIX ${CMAKE_SHARED_LIBRARY_PREFIX})
@@ -32,21 +26,21 @@ cmake_dependent_option(ENABLE_SZIP "Enable szip" ON
                        "ENABLE_HDF5" OFF)
 
 if(EXODUSII_FOUND AND ENABLE_EXODUS)
-  message(FATAL_ERROR "System Exodus library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_EXODUSII=ON to force it")
+  message(WARNING "System Exodus library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_EXODUSII=ON to force it")
 endif(EXODUSII_FOUND AND ENABLE_EXODUS)
 
 find_package(LAPACKE)
 STRING(COMPARE EQUAL ${LAPACKE_FOUND} FALSE ENABLE_LAPACK_DEFAULT)
 option(ENABLE_LAPACK "Enable LAPACK and dependencies" ${ENABLE_LAPACK_DEFAULT})
 if(LAPACKE_FOUND AND ENABLE_LAPACK)
-  message(FATAL_ERROR "System Lapacke library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_LAPACKE=ON to force it")
+  message(WARNING "System Lapacke library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_LAPACKE=ON to force it")
 endif(LAPACKE_FOUND AND ENABLE_LAPACK)
 
 find_package(METIS 5.1)
 STRING(COMPARE EQUAL ${METIS_FOUND} FALSE ENABLE_METIS_DEFAULT)
 option(ENABLE_METIS "Enable METIS and dependencies" ${ENABLE_METIS_DEFAULT})
 if(METIS_FOUND AND ENABLE_METIS)
-  message(FATAL_ERROR "System metis library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_METIS=ON to force it")
+  message(WARNING "System metis library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_METIS=ON to force it")
 endif(METIS_FOUND AND ENABLE_METIS)
 option(METIS_INT64 "Build METIS with int64 support" OFF)
 
@@ -56,7 +50,7 @@ option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" ${ENABLE_SCOTCH_DEFAULT})
 cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ON
                        "ENABLE_HDF5 OR ENABLE_SCOTCH" OFF)
 if(SCOTCH_FOUND AND ENABLE_SCOTCH)
-  message(FATAL_ERROR "System scotch library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_SCOTCH=ON to force it")
+  message(WARNING "System scotch library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_SCOTCH=ON to force it")
 endif(SCOTCH_FOUND AND ENABLE_SCOTCH)
 
 find_package(Legion)
@@ -65,7 +59,7 @@ option(ENABLE_LEGION "Enable LEGION and dependencies" ${ENABLE_LEGION_DEFAULT})
 cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ON
                        "ENABLE_LEGION" OFF)
 if(Legion_FOUND AND ENABLE_LEGION)
-  message(FATAL_ERROR "System legion library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_LEGION=ON to force it")
+  message(WARNING "System legion library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_LEGION=ON to force it")
 endif(Legion_FOUND AND ENABLE_LEGION)
 
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" OFF)
@@ -74,7 +68,7 @@ find_package (Cereal)
 STRING(COMPARE EQUAL ${Cereal_FOUND} FALSE ENABLE_CEREAL_DEFAULT)
 option(ENABLE_CEREAL "Enable Cereal C++ serialization library" ${ENABLE_CEREAL_DEFAULT})
 if(Cereal_FOUND AND ENABLE_CEREAL)
-  message(FATAL_ERROR "System cereal library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_Cereal=ON to force it")
+  message(WARNING "System cereal library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_Cereal=ON to force it")
 endif(Cereal_FOUND AND ENABLE_CEREAL)
 
 # build the libraries
@@ -88,7 +82,12 @@ if(ENABLE_ZLIB)
 endif(ENABLE_ZLIB)
 
 if(ENABLE_SZIP)
-  include(cmake/szip.cmake)
+  find_package(SZIP)
+  if(SZIP_FOUND)
+    message("System szip library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_SZIP=ON to force it")
+  else()
+    include(cmake/szip.cmake)
+  endif()
 endif(ENABLE_SZIP)
 
 if(ENABLE_HDF5)
@@ -101,7 +100,12 @@ if(ENABLE_HDF5)
 endif(ENABLE_HDF5)
 
 if(ENABLE_NETCDF)
-  include(cmake/netcdf.cmake)
+  find_package(NetCDF)
+  if(NetCDF_FOUND)
+    message("System netcdf library found, no point in building it! (use -DCMAKE_DISABLE_FIND_PACKAGE_NetCDF=ON to force it")
+  else()
+    include(cmake/netcdf.cmake)
+  endif()
 endif(ENABLE_NETCDF)
 
 if(ENABLE_EXODUS)

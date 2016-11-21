@@ -7,27 +7,26 @@ services:
 
 env:
   matrix:
-    - DOCKERFILE=fedora METIS_INT64=OFF
-    - DOCKERFILE=fedora METIS_INT64=ON DOCKERHUB=true
-    - DOCKERFILE=ubuntu METIS_INT64=OFF
-    - DOCKERFILE=ubuntu METIS_INT64=ON DOCKERHUB=true
+    - DISTRO=fedora DOCKERHUB=true
+    - DISTRO=ubuntu DOCKERHUB=true
 
 script:
-  - cp -vr dockerfiles ${HOME}/docker
-  - ln -s ${DOCKERFILE} ${HOME}/docker/Dockerfile
+  - cp -vr docker ${HOME}/docker
+  - sed -i "1s/fedora/${DISTRO}/" ${HOME}/docker/Dockerfile
   - cd ../../
   - mv -v ${TRAVIS_REPO_SLUG} $HOME/docker
+  - ccache -z
   - cp -r ${HOME}/.ccache ${HOME}/docker/ccache
-  - docker build --build-arg METIS_INT64=${METIS_INT64}
-                 -t flecsi/flecsi_tpl:${DOCKERFILE} ${HOME}/docker/ &&
+  - docker build -t flecsi/flecsi_tpl:${DISTRO} ${HOME}/docker/ &&
     rm -rf ${HOME}/.ccache &&
-    CON=$(docker run -d flecsi/flecsi_tpl:${DOCKERFILE} /bin/bash) &&
+    CON=$(docker run -d flecsi/flecsi_tpl:${DISTRO} /bin/bash) &&
     docker cp ${CON}:/home/flecsi/.ccache ${HOME}/
+  - ccache -s
 
 after_success:
   - if [[ ${DOCKERHUB} = true && ${DOCKER_EMAIL} && ${DOCKER_USERNAME} && ${DOCKER_PASSWORD} && ${TRAVIS_PULL_REQUEST} == false && ${TRAVIS_BRANCH} == master ]]; then
       docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-      docker push "flecsi/flecsi_tpl:${DOCKERFILE}";
+      docker push "flecsi/flecsi_tpl:${DISTRO}";
    fi
 
 cache:
