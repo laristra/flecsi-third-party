@@ -71,7 +71,8 @@ cmake_dependent_option(ENABLE_SZIP "Enable szip" ${ENABLE_SZIP_DEFAULT}
 option(ENABLE_LAPACK "Enable LAPACK and dependencies" ${ENABLE_LAPACK_DEFAULT})
 
 option(ENABLE_METIS "Enable METIS and dependencies" ${ENABLE_METIS_DEFAULT})
-option(METIS_INT64 "Build METIS with int64 support" OFF)
+cmake_dependent_option(METIS_INT64 "Build METIS with int64 support" OFF
+                       "ENABLE_METIS" OFF)
 
 option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" ${ENABLE_SCOTCH_DEFAULT})
 cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ${ENABLE_ZLIB_DEFAULT}
