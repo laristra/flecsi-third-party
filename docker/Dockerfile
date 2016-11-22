@@ -12,7 +12,6 @@ WORKDIR /home/flecsi/tpl
 RUN mkdir -p build && cd build && \
     cmake -DBUILD_SHARED_LIBS=ON \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
-	  -DCMAKE_DISABLE_FIND_PACKAGE_GASNet=ON \
           .. && make -j2;
 
 USER root
