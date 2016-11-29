@@ -96,6 +96,13 @@ option(ENABLE_METIS "Enable METIS and dependencies" ${ENABLE_METIS_DEFAULT})
 cmake_dependent_option(METIS_INT64 "Build METIS with int64 support" OFF
                        "ENABLE_METIS" OFF)
 
+#Parmetis license does not allow redistribution
+option(ENABLE_PARMETIS "Enable PARMETIS and dependencies" OFF)
+#Parmetis and Metis have symbol collision
+if(ENABLE_METIS AND ENABLE_PARMETIS)
+  message(FATAL_ERROR "libmetis and libparmetis provide the same symbols, so pick one")
+endif()
+
 option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" ${ENABLE_SCOTCH_DEFAULT})
 cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ${ENABLE_ZLIB_DEFAULT}
                        "ENABLE_HDF5 OR ENABLE_SCOTCH" OFF)
@@ -137,6 +144,10 @@ endif(ENABLE_LAPACK)
 
 if(ENABLE_METIS)
   include(cmake/metis.cmake)
+endif()
+
+if(ENABLE_PARMETIS)
+  include(cmake/parmetis.cmake)
 endif()
 
 if(ENABLE_SCOTCH)
