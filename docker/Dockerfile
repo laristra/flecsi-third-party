@@ -24,6 +24,7 @@ WORKDIR /home/flecsi
 RUN git clone --depth 1 --recursive https://github.com/losalamos/flecsi flecsi && \
     cd flecsi && mkdir build && cd build && \
     cmake -DENABLE_PARTITION=ON -DENABLE_IO=ON \
+         -DENABLE_MPI=ON \
          -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=mpilegion .. && \
     make -j2 && make test && \
     cd ../.. && \
