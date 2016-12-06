@@ -1,0 +1,27 @@
+Common subdirectories: parmetis-4.0.3/build and parmetis-4.0.3-mod/build
+diff -u parmetis-4.0.3/CMakeLists.txt parmetis-4.0.3-mod/CMakeLists.txt
+--- parmetis-4.0.3/CMakeLists.txt	2016-12-05 22:09:41.780860144 -0700
++++ parmetis-4.0.3-mod/CMakeLists.txt	2016-12-05 22:10:01.033424205 -0700
+@@ -10,7 +10,7 @@
+ 
+ # Search for MPI.
+ # GK commented this out as it seems to be creating problems
+-# include(FindMPI)
++include(FindMPI)
+ # if(NOT MPI_FOUND)
+ #   message(FATAL_ERROR "mpi is not found")
+ # endif()
+@@ -34,6 +34,7 @@
+ 
+ # List of directories that cmake will look for CMakeLists.txt
+ add_subdirectory(${METIS_PATH}/libmetis ${CMAKE_BINARY_DIR}/libmetis)
++add_subdirectory(${METIS_PATH}/include)
+ add_subdirectory(include)
+ add_subdirectory(libparmetis)
+ add_subdirectory(programs)
+Common subdirectories: parmetis-4.0.3/Graphs and parmetis-4.0.3-mod/Graphs
+Common subdirectories: parmetis-4.0.3/include and parmetis-4.0.3-mod/include
+Common subdirectories: parmetis-4.0.3/libparmetis and parmetis-4.0.3-mod/libparmetis
+Common subdirectories: parmetis-4.0.3/manual and parmetis-4.0.3-mod/manual
+Common subdirectories: parmetis-4.0.3/metis and parmetis-4.0.3-mod/metis
+Common subdirectories: parmetis-4.0.3/programs and parmetis-4.0.3-mod/programs
