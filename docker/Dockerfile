@@ -19,6 +19,9 @@ USER root
 RUN chown -R root:root /usr/local
 USER flecsi
 
+#Skip some tests
+ENV TRAVIS true
+
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
 RUN git clone --depth 1 --recursive https://github.com/losalamos/flecsi flecsi && \
