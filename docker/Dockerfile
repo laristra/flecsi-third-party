@@ -1,4 +1,4 @@
-FROM flecsi/flecsi-buildenv:fedora_mpich
+FROM flecsi/flecsi-buildenv:fedora
 
 ARG SYSTEM_LIBS
 
