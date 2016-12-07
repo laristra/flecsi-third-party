@@ -1,5 +1,11 @@
+#------------------------------------------------------------------------------#
+# Top-level CMakeLists.txt
+#------------------------------------------------------------------------------#
+
 project(ThirdParty LANGUAGES CXX C Fortran)
+
 cmake_minimum_required(VERSION 3.1.0)
+
 include(CMakeDependentOption)
 include(ExternalProject) 
 
@@ -16,9 +22,22 @@ endif()
 
 set(ENABLE_EXODUS_DEFAULT ON)
 set(ENABLE_LAPACK_DEFAULT ON)
-set(ENABLE_METIS_DEFAULT ON)
-#Parmetis license does not allow redistribution
-set(ENABLE_PARMETIS_DEFAULT OFF)
+
+#------------------------------------------------------------------------------#
+# Add options for METIS model selection
+#------------------------------------------------------------------------------#
+
+set(METIS_MODELS serial parallel)
+
+if(NOT METIS_MODEL)
+	list(GET METIS_MODELS 0 METIS_MODEL)
+endif()
+
+set(METIS_MODEL "${METIS_MODEL}" CACHE STRING "Select the metis model")
+set_property(CACHE METIS_MODEL PROPERTY STRINGS ${METIS_MODELS})
+
+#------------------------------------------------------------------------------#
+
 set(ENABLE_SCOTCH_DEFAULT ON)
 set(ENABLE_LEGION_DEFAULT ON)
 set(ENABLE_CEREAL_DEFAULT ON)
@@ -38,14 +57,19 @@ if(USE_SYSTEM_LIBS)
   if(LAPACKE_FOUND)
     set(ENABLE_LAPACK_DEFAULT OFF)
   endif(LAPACKE_FOUND)
-  find_package(METIS 5.1)
-  if(METIS_FOUND)
-    set(ENABLE_METIS_DEFAULT OFF)
-  endif(METIS_FOUND)
-  find_package(ParMETIS)
-  if(ParMETIS_FOUND)
-    set(ENABLE_PARMETIS_DEFAULT OFF)
-  endif(ParMETIS_FOUND)
+
+  if(METIS_MODEL STREQUAL "parallel")
+    find_package(ParMETIS)
+    if(ParMETIS_FOUND)
+      set(ENABLE_METIS_DEFAULT OFF)
+    endif(ParMETIS_FOUND)
+  else()
+    find_package(METIS 5.1)
+    if(METIS_FOUND)
+      set(ENABLE_METIS_DEFAULT OFF)
+    endif(METIS_FOUND)
+  endif()
+
   find_package(SCOTCH)
   if(SCOTCH_FOUND)
     set(ENABLE_SCOTCH_DEFAULT OFF)
@@ -107,11 +131,11 @@ option(ENABLE_METIS "Enable METIS and dependencies" ${ENABLE_METIS_DEFAULT})
 cmake_dependent_option(METIS_INT64 "Build METIS with int64 support" OFF
                        "ENABLE_METIS" OFF)
 
-option(ENABLE_PARMETIS "Enable PARMETIS and dependencies" ${ENABLE_PARMETIS_DEFAULT})
+#option(ENABLE_PARMETIS "Enable PARMETIS and dependencies" ${ENABLE_PARMETIS_DEFAULT})
 #Parmetis and Metis have symbol collision
-if(ENABLE_METIS AND ENABLE_PARMETIS)
-  message(FATAL_ERROR "libmetis and libparmetis provide the same symbols, so pick one")
-endif()
+#if(ENABLE_METIS AND ENABLE_PARMETIS)
+#  message(FATAL_ERROR "libmetis and libparmetis provide the same symbols, so pick one")
+#endif()
 
 option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" ${ENABLE_SCOTCH_DEFAULT})
 cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ${ENABLE_ZLIB_DEFAULT}
@@ -155,11 +179,11 @@ if(ENABLE_LAPACK)
 endif(ENABLE_LAPACK)
 
 if(ENABLE_METIS)
-  include(cmake/metis.cmake)
-endif()
-
-if(ENABLE_PARMETIS)
-  include(cmake/parmetis.cmake)
+  if(METIS_MODEL STREQUAL "parallel")
+    include(cmake/parmetis.cmake)
+  else(METIS_MODEL STREQUAL "serial")
+    include(cmake/metis.cmake)
+  endif()
 endif()
 
 if(ENABLE_SCOTCH)
