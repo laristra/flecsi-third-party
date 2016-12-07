@@ -36,10 +36,6 @@ endif()
 set(METIS_MODEL "${METIS_MODEL}" CACHE STRING "Select the metis model")
 set_property(CACHE METIS_MODEL PROPERTY STRINGS ${METIS_MODELS})
 
-#set(ENABLE_METIS_DEFAULT ON)
-#Parmetis license does not allow redistribution
-#set(ENABLE_PARMETIS_DEFAULT OFF)
-
 #------------------------------------------------------------------------------#
 
 set(ENABLE_SCOTCH_DEFAULT ON)
