@@ -11,7 +11,6 @@ USER flecsi
 WORKDIR /home/flecsi/tpl
 RUN mkdir -p build && cd build && \
     cmake -DBUILD_SHARED_LIBS=ON \
-          -DENABLE_PARMETIS=OFF \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
           .. && make -j2;
 
