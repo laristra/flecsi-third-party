@@ -27,7 +27,7 @@ set(ENABLE_LAPACK_DEFAULT ON)
 # Add options for METIS model selection
 #------------------------------------------------------------------------------#
 
-set(METIS_MODELS serial parallel)
+set(METIS_MODELS parallel serial)
 
 if(NOT METIS_MODEL)
 	list(GET METIS_MODELS 0 METIS_MODEL)
@@ -47,6 +47,7 @@ set(ENABLE_HDF5_DEFAULT ON)
 set(ENABLE_NETCF_DEFAULT ON)
 set(ENABLE_GASNET_DEFAULT ON)
 set(ENABLE_THRUST_DEFAULT ON)
+set(ENABLE_METIS_DEFAULT ON)
 option(USE_SYSTEM_LIBS "Check for system libraries and use them if found" OFF)
 if(USE_SYSTEM_LIBS)
   find_package(EXODUSII)
@@ -130,12 +131,6 @@ option(ENABLE_LAPACK "Enable LAPACK and dependencies" ${ENABLE_LAPACK_DEFAULT})
 option(ENABLE_METIS "Enable METIS and dependencies" ${ENABLE_METIS_DEFAULT})
 cmake_dependent_option(METIS_INT64 "Build METIS with int64 support" OFF
                        "ENABLE_METIS" OFF)
-
-#option(ENABLE_PARMETIS "Enable PARMETIS and dependencies" ${ENABLE_PARMETIS_DEFAULT})
-#Parmetis and Metis have symbol collision
-#if(ENABLE_METIS AND ENABLE_PARMETIS)
-#  message(FATAL_ERROR "libmetis and libparmetis provide the same symbols, so pick one")
-#endif()
 
 option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" ${ENABLE_SCOTCH_DEFAULT})
 cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ${ENABLE_ZLIB_DEFAULT}
