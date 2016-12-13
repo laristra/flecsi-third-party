@@ -3,12 +3,17 @@ set(PARMETIS_URL http://glaros.dtc.umn.edu/gkhome/fetch/sw/parmetis)
 set(PARMETIS_GZ  parmetis-4.0.3.tar.gz)
 set(PARMETIS_MD5 "f69c479586bf6bb7aff6a9bc0c739628")
 
+set(PATCH_COMMAND patch -p1 < ${PROJECT_SOURCE_DIR}/patches/parmetis-4.0.3-cmake.patch)
+if(METIS_INT64)
+  set(PATCH_COMMAND ${PATCH_COMMAND} COMMAND patch -p0 < ${PROJECT_SOURCE_DIR}/patches/metis-5.1.0-datatype.patch)
+endif(METIS_INT64)
+
 message(STATUS "Building ${PARMETIS_NAME}")
 ExternalProject_Add(${PARMETIS_NAME}
  URL ${PARMETIS_URL}/${PARMETIS_GZ}
  URL_MD5 ${PARMETIS_MD5}
  UPDATE_COMMAND ""
- PATCH_COMMAND patch -p1 < ${PROJECT_SOURCE_DIR}/patches/parmetis-4.0.3-cmake.patch
+ PATCH_COMMAND ${PATCH_COMMAND}
  CMAKE_ARGS
    -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
    -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}

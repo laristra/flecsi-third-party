@@ -5,7 +5,7 @@ set(METIS_MD5 "5465e67079419a69e0116de24fce58fe")
 
 set(PATCH_COMMAND)
 if(METIS_INT64)
-   set(PATCH_COMMAND patch -p0 < ${PROJECT_SOURCE_DIR}/patches/metis-5.1.0-datatype.patch)
+   set(PATCH_COMMAND patch -p1 < ${PROJECT_SOURCE_DIR}/patches/metis-5.1.0-datatype.patch)
 endif(METIS_INT64)
 
 message(STATUS "Building ${METIS_NAME}")
