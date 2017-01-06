@@ -1,4 +1,4 @@
-FROM flecsi/flecsi-buildenv:fedora
+FROM laristra/flecsi-buildenv:fedora
 
 ARG SYSTEM_LIBS
 
