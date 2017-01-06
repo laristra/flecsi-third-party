@@ -23,7 +23,7 @@ ENV TRAVIS true
 
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
-RUN git clone --depth 1 --recursive https://github.com/losalamos/flecsi flecsi && \
+RUN git clone --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
     cd flecsi && mkdir build && cd build && \
     cmake -DENABLE_PARTITION=ON -DENABLE_IO=ON \
          -DENABLE_MPI=ON \
