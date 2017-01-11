@@ -1,6 +1,7 @@
 FROM laristra/flecsi-buildenv:fedora
 
 ARG SYSTEM_LIBS
+ARG CMAKE_BUILD_TYPE
 
 COPY flecsi-third-party/ /home/flecsi/tpl
 COPY ccache/ /home/flecsi/.ccache
@@ -11,6 +12,7 @@ USER flecsi
 WORKDIR /home/flecsi/tpl
 RUN mkdir -p build && cd build && \
     cmake -DBUILD_SHARED_LIBS=ON \
+          -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
           .. && make -j2;
 
