@@ -8,8 +8,10 @@ services:
 env:
   matrix:
     - DISTRO=fedora SYSTEM_LIBS=OFF
+    - DISTRO=fedora SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug DOCKERHUB=true
     - DISTRO=fedora SYSTEM_LIBS=ON DOCKERHUB=true
     - DISTRO=ubuntu SYSTEM_LIBS=OFF
+    - DISTRO=ubuntu SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug DOCKERHUB=true
     - DISTRO=ubuntu SYSTEM_LIBS=ON DOCKERHUB=true
     - DISTRO=fedora_mpich SYSTEM_LIBS=OFF
     - DISTRO=fedora_mpich SYSTEM_LIBS=ON DOCKERHUB=true
@@ -23,17 +25,19 @@ script:
   - mv -v ${TRAVIS_REPO_SLUG} $HOME/docker
   - ccache -z
   - cp -r ${HOME}/.ccache ${HOME}/docker/ccache
+  - if [[ ${CMAKE_BUILD_TYPE} ]]; then TAG="_${CMAKE_BUILD_TYPE}"; fi
   - docker build --build-arg SYSTEM_LIBS=${SYSTEM_LIBS}
-                  -t ${TRAVIS_REPO_SLUG}:${DISTRO} ${HOME}/docker/ &&
+                 --build-arg CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+                  -t ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} ${HOME}/docker/ &&
     rm -rf ${HOME}/.ccache &&
-    CON=$(docker run -d ${TRAVIS_REPO_SLUG}:${DISTRO} /bin/bash) &&
+    CON=$(docker run -d ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} /bin/bash) &&
     docker cp ${CON}:/home/flecsi/.ccache ${HOME}/
   - ccache -s
 
 after_success:
   - if [[ ${DOCKERHUB} = true && ${DOCKER_EMAIL} && ${DOCKER_USERNAME} && ${DOCKER_PASSWORD} && ${TRAVIS_PULL_REQUEST} == false && ${TRAVIS_BRANCH} == master ]]; then
       docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-      docker push "${TRAVIS_REPO_SLUG}:${DISTRO}";
+      docker push "${TRAVIS_REPO_SLUG}:${DISTRO}${TAG}";
    fi
 
 cache:
