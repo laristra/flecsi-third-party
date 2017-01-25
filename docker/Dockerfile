@@ -12,7 +12,7 @@ USER flecsi
 WORKDIR /home/flecsi/tpl
 RUN mkdir -p build && cd build && \
     cmake -DBUILD_SHARED_LIBS=ON \
-          -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
+          ${CMAKE_BUILD_TYPE:+-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
           .. && make -j2;
 
