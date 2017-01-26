@@ -10,6 +10,11 @@ if (NOT FLEX)
             "'flex' lexical parser not found. Cannot build scotch." )
 endif()
 
+#workaround for  StanfordLegion/legion#172
+if(EXISTS "${CMAKE_INSTALL_PREFIX}/include/common.h")
+  message(FATAL_ERROR "Cannot build scotch with Legion's common.h in ${CMAKE_INSTALL_PREFIX}/include (see  StanfordLegion/legion#172)")
+endif()
+
 message(STATUS "Building ${SCOTCH_NAME}")
 ExternalProject_Add( ${SCOTCH_NAME}
  DEPENDS ${ZLIB_PACKAGE_NAME}
