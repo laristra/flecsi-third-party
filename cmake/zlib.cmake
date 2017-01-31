@@ -19,7 +19,8 @@ ExternalProject_Add(${ZLIB_NAME}
   LOG_BUILD 1
 )
 
-set(ZLIB_INCLUDE_DIR ${CMAKE_BINARY_DIR}/zlib-prefix/src/zlib)
+ExternalProject_Get_Property(${ZLIB_NAME} source_dir)
+set(ZLIB_INCLUDE_DIR ${source_dir})
 if (CMAKE_BUILD_TYPE MATCHES Debug)
   set(ZLIB_LIBRARIES ${CMAKE_INSTALL_PREFIX}/lib/${CMAKE_LIBRARY_PREFIX}z_debug${CMAKE_LIBRARY_SUFFIX})
 else()
