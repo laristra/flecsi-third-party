@@ -1,5 +1,5 @@
 set(PARMETIS_NAME parmetis)
-set(PARMETIS_URL http://glaros.dtc.umn.edu/gkhome/fetch/sw/parmetis)
+set(PARMETIS_URL ${PROJECT_SOURCE_DIR}/files)
 set(PARMETIS_GZ  parmetis-4.0.3.tar.gz)
 set(PARMETIS_MD5 "f69c479586bf6bb7aff6a9bc0c739628")
 
