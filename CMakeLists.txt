@@ -38,7 +38,7 @@ set_property(CACHE METIS_MODEL PROPERTY STRINGS ${METIS_MODELS})
 
 #------------------------------------------------------------------------------#
 
-set(ENABLE_SCOTCH_DEFAULT ON)
+set(ENABLE_SCOTCH_DEFAULT OFF)
 set(ENABLE_LEGION_DEFAULT ON)
 set(ENABLE_CEREAL_DEFAULT ON)
 set(ENABLE_ZLIB_DEFAULT ON)
