@@ -40,7 +40,6 @@ set_property(CACHE METIS_MODEL PROPERTY STRINGS ${METIS_MODELS})
 
 set(ENABLE_SCOTCH_DEFAULT ON)
 set(ENABLE_LEGION_DEFAULT ON)
-set(ENABLE_CEREAL_DEFAULT ON)
 set(ENABLE_ZLIB_DEFAULT ON)
 set(ENABLE_SZIP_DEFAULT ON)
 set(ENABLE_HDF5_DEFAULT ON)
@@ -79,10 +78,6 @@ if(USE_SYSTEM_LIBS)
   if(Legion_FOUND)
     set(ENABLE_LEGION_DEFAULT OFF)
   endif(Legion_FOUND)
-  find_package (Cereal)
-  if(Cereal_FOUND)
-    set(ENABLE_CEREAL_DEFAULT OFF)
-  endif(Cereal_FOUND)
   find_package(ZLIB)
   if(ZLIB_FOUND)
     set(ENABLE_ZLIB_DEFAULT OFF)
@@ -144,8 +139,6 @@ set(GASNet_CONDUIT "mpi" CACHE STRING "Select Gasnet conduit [udp, mpi]")
 
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
-option(ENABLE_CEREAL "Enable Cereal C++ serialization library" ${ENABLE_CEREAL_DEFAULT})
-
 option(ENABLE_THRUST "Enable Thrust parallel algorithms library" ${ENABLE_THRUST_DEFAULT})
 
 # build the libraries
@@ -203,10 +196,6 @@ endif(ENABLE_LEGION)
 if(ENABLE_CINCH_UTILS)
   include(cmake/cinch-utils.cmake)
 endif(ENABLE_CINCH_UTILS)
-
-if(ENABLE_CEREAL)
-  include(cmake/cereal.cmake)
-endif(ENABLE_CEREAL)
 
 if(ENABLE_THRUST)
   include(cmake/thrust.cmake)
