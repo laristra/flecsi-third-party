@@ -40,13 +40,11 @@ set_property(CACHE METIS_MODEL PROPERTY STRINGS ${METIS_MODELS})
 
 set(ENABLE_SCOTCH_DEFAULT ON)
 set(ENABLE_LEGION_DEFAULT ON)
-set(ENABLE_CEREAL_DEFAULT ON)
 set(ENABLE_ZLIB_DEFAULT ON)
 set(ENABLE_SZIP_DEFAULT ON)
 set(ENABLE_HDF5_DEFAULT ON)
 set(ENABLE_NETCF_DEFAULT ON)
 set(ENABLE_GASNET_DEFAULT ON)
-set(ENABLE_THRUST_DEFAULT ON)
 set(ENABLE_METIS_DEFAULT ON)
 option(USE_SYSTEM_LIBS "Check for system libraries and use them if found" OFF)
 if(USE_SYSTEM_LIBS)
@@ -79,10 +77,6 @@ if(USE_SYSTEM_LIBS)
   if(Legion_FOUND)
     set(ENABLE_LEGION_DEFAULT OFF)
   endif(Legion_FOUND)
-  find_package (Cereal)
-  if(Cereal_FOUND)
-    set(ENABLE_CEREAL_DEFAULT OFF)
-  endif(Cereal_FOUND)
   find_package(ZLIB)
   if(ZLIB_FOUND)
     set(ENABLE_ZLIB_DEFAULT OFF)
@@ -110,10 +104,6 @@ if(USE_SYSTEM_LIBS)
        -DGASNet_gasnet_tools-par_LIBRARY=$ENV{MPI_LIB}/libgasnet_tools-par.so
       )
   endif()
-  find_package(Thrust)
-  if(Thrust_FOUND)
-    set(ENABLE_THRUST_DEFAULT OFF)
-  endif(Thrust_FOUND)
 else(USE_SYSTEM_LIBS)
 endif(USE_SYSTEM_LIBS)
 
@@ -143,10 +133,6 @@ cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ${ENABLE_GASNET_DEFAULT}
 set(GASNet_CONDUIT "mpi" CACHE STRING "Select Gasnet conduit [udp, mpi]")
 
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
-
-option(ENABLE_CEREAL "Enable Cereal C++ serialization library" ${ENABLE_CEREAL_DEFAULT})
-
-option(ENABLE_THRUST "Enable Thrust parallel algorithms library" ${ENABLE_THRUST_DEFAULT})
 
 # build the libraries
 if(ENABLE_ZLIB)
@@ -203,11 +189,3 @@ endif(ENABLE_LEGION)
 if(ENABLE_CINCH_UTILS)
   include(cmake/cinch-utils.cmake)
 endif(ENABLE_CINCH_UTILS)
-
-if(ENABLE_CEREAL)
-  include(cmake/cereal.cmake)
-endif(ENABLE_CEREAL)
-
-if(ENABLE_THRUST)
-  include(cmake/thrust.cmake)
-endif(ENABLE_THRUST)
