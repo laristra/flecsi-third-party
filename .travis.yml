@@ -30,7 +30,8 @@ script:
   - if [[ ${CMAKE_BUILD_TYPE} ]]; then TAG="_${CMAKE_BUILD_TYPE}"; fi
   - docker build --build-arg SYSTEM_LIBS=${SYSTEM_LIBS}
                  --build-arg CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-                  -t ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} ${HOME}/docker/ &&
+                 --build-arg TRAVIS=${TRAVIS}
+                 -t ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} ${HOME}/docker/ &&
     rm -rf ${HOME}/.ccache &&
     CON=$(docker run -d ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} /bin/bash) &&
     docker cp ${CON}:/home/flecsi/.ccache ${HOME}/

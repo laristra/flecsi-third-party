@@ -2,6 +2,8 @@ FROM laristra/flecsi-buildenv:fedora
 
 ARG SYSTEM_LIBS
 ARG CMAKE_BUILD_TYPE
+#Skip some tests
+ARG TRAVIS
 
 COPY flecsi-third-party/ /home/flecsi/tpl
 COPY ccache/ /home/flecsi/.ccache
@@ -20,9 +22,6 @@ RUN mkdir -p build && cd build && \
 USER root
 RUN chown -R root:root /usr/local
 USER flecsi
-
-#Skip some tests
-ENV TRAVIS true
 
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
