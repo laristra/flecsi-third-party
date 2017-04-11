@@ -21,7 +21,6 @@ else()
 endif()
 
 set(ENABLE_EXODUS_DEFAULT ON)
-set(ENABLE_LAPACK_DEFAULT ON)
 
 #------------------------------------------------------------------------------#
 # Add options for METIS model selection
@@ -52,10 +51,6 @@ if(USE_SYSTEM_LIBS)
   if(EXODUSII_FOUND)
     set(ENABLE_EXODUS_DEFAULT OFF)
   endif(EXODUSII_FOUND)
-  find_package(LAPACKE)
-  if(LAPACKE_FOUND)
-    set(ENABLE_LAPACK_DEFAULT OFF)
-  endif(LAPACKE_FOUND)
 
   if(METIS_MODEL STREQUAL "parallel")
     find_package(ParMETIS)
@@ -116,8 +111,6 @@ cmake_dependent_option(ENABLE_NETCDF "Enable HDF5" ${ENABLE_NETCF_DEFAULT}
 cmake_dependent_option(ENABLE_SZIP "Enable szip" ${ENABLE_SZIP_DEFAULT}
                        "ENABLE_HDF5" OFF)
 
-option(ENABLE_LAPACK "Enable LAPACK and dependencies" ${ENABLE_LAPACK_DEFAULT})
-
 option(ENABLE_METIS "Enable METIS and dependencies" ${ENABLE_METIS_DEFAULT})
 cmake_dependent_option(METIS_INT64 "Build METIS with int64 support" OFF
                        "ENABLE_METIS" OFF)
@@ -155,10 +148,6 @@ if(ENABLE_EXODUS)
   include(cmake/exodus.cmake)
 endif(ENABLE_EXODUS)
 
-if(ENABLE_LAPACK)
-  include(cmake/lapack.cmake)
-endif(ENABLE_LAPACK)
-
 if(ENABLE_METIS)
   if(METIS_MODEL STREQUAL "parallel")
     include(cmake/parmetis.cmake)
@@ -170,10 +159,6 @@ endif()
 if(ENABLE_SCOTCH)
   include(cmake/scotch.cmake)
 endif()
-
-if(ENABLE_LAPACK)
-  install(SCRIPT scripts/lapack_post_install.cmake)
-endif(ENABLE_LAPACK)
 
 if(ENABLE_GASNET)
   include(cmake/gasnet.cmake)
