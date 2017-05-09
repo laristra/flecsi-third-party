@@ -20,8 +20,6 @@ else()
     set(CMAKE_LIBRARY_SUFFIX ${CMAKE_STATIC_LIBRARY_SUFFIX})
 endif()
 
-set(ENABLE_EXODUS_DEFAULT ON)
-
 #------------------------------------------------------------------------------#
 # Add options for METIS model selection
 #------------------------------------------------------------------------------#
@@ -37,21 +35,11 @@ set_property(CACHE METIS_MODEL PROPERTY STRINGS ${METIS_MODELS})
 
 #------------------------------------------------------------------------------#
 
-set(ENABLE_SCOTCH_DEFAULT OFF)
 set(ENABLE_LEGION_DEFAULT ON)
-set(ENABLE_ZLIB_DEFAULT ON)
-set(ENABLE_SZIP_DEFAULT ON)
-set(ENABLE_HDF5_DEFAULT ON)
-set(ENABLE_NETCF_DEFAULT ON)
 set(ENABLE_GASNET_DEFAULT ON)
 set(ENABLE_METIS_DEFAULT ON)
 option(USE_SYSTEM_LIBS "Check for system libraries and use them if found" OFF)
 if(USE_SYSTEM_LIBS)
-  find_package(EXODUSII)
-  if(EXODUSII_FOUND)
-    set(ENABLE_EXODUS_DEFAULT OFF)
-  endif(EXODUSII_FOUND)
-
   if(METIS_MODEL STREQUAL "parallel")
     find_package(ParMETIS)
     if(ParMETIS_FOUND)
@@ -64,30 +52,10 @@ if(USE_SYSTEM_LIBS)
     endif(METIS_FOUND)
   endif()
 
-  find_package(SCOTCH)
-  if(SCOTCH_FOUND)
-    set(ENABLE_SCOTCH_DEFAULT OFF)
-  endif(SCOTCH_FOUND)
   find_package(Legion)
   if(Legion_FOUND)
     set(ENABLE_LEGION_DEFAULT OFF)
   endif(Legion_FOUND)
-  find_package(ZLIB)
-  if(ZLIB_FOUND)
-    set(ENABLE_ZLIB_DEFAULT OFF)
-  endif(ZLIB_FOUND)
-  find_package(SZIP)
-  if(SZIP_FOUND)
-    set(ENABLE_SZIP_DEFAULT OFF)
-  endif(SZIP_FOUND)
-  find_package(HDF5)
-  if(HDF5_FOUND)
-    set(ENABLE_HDF5_DEFAULT OFF)
-  endif(HDF5_FOUND)
-  find_package(NetCDF)
-  if(NetCDF_FOUND)
-    set(ENABLE_NETCF_DEFAULT OFF)
-  endif(NetCDF_FOUND)
   find_package(GASNet)
   if(GASNet_FOUND)
     set(ENABLE_GASNET_DEFAULT OFF)
@@ -99,25 +67,12 @@ if(USE_SYSTEM_LIBS)
        -DGASNet_gasnet_tools-par_LIBRARY=$ENV{MPI_LIB}/libgasnet_tools-par.so
       )
   endif()
-else(USE_SYSTEM_LIBS)
 endif(USE_SYSTEM_LIBS)
 
 # third party libraries to build
-option(ENABLE_EXODUS "Enable Exodus and dependencies" ${ENABLE_EXODUS_DEFAULT}) 
-cmake_dependent_option(ENABLE_HDF5 "Enable HDF5" ${ENABLE_HDF5_DEFAULT}
-                       "ENABLE_EXODUS" OFF)
-cmake_dependent_option(ENABLE_NETCDF "Enable HDF5" ${ENABLE_NETCF_DEFAULT}
-                       "ENABLE_EXODUS" OFF)
-cmake_dependent_option(ENABLE_SZIP "Enable szip" ${ENABLE_SZIP_DEFAULT}
-                       "ENABLE_HDF5" OFF)
-
 option(ENABLE_METIS "Enable METIS and dependencies" ${ENABLE_METIS_DEFAULT})
 cmake_dependent_option(METIS_INT64 "Build METIS with int64 support" OFF
                        "ENABLE_METIS" OFF)
-
-option(ENABLE_SCOTCH "Enable SCOTCH and dependencies" ${ENABLE_SCOTCH_DEFAULT})
-cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ${ENABLE_ZLIB_DEFAULT}
-                       "ENABLE_HDF5 OR ENABLE_SCOTCH" OFF)
 
 option(ENABLE_LEGION "Enable LEGION and dependencies" ${ENABLE_LEGION_DEFAULT})
 cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ${ENABLE_GASNET_DEFAULT}
@@ -128,36 +83,12 @@ set(GASNet_CONDUIT "mpi" CACHE STRING "Select Gasnet conduit [udp, mpi]")
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
 # build the libraries
-if(ENABLE_ZLIB)
-  include(cmake/zlib.cmake)
-endif(ENABLE_ZLIB)
-
-if(ENABLE_SZIP)
-  include(cmake/szip.cmake)
-endif(ENABLE_SZIP)
-
-if(ENABLE_HDF5)
-  include(cmake/hdf5.cmake)
-endif(ENABLE_HDF5)
-
-if(ENABLE_NETCDF)
-  include(cmake/netcdf.cmake)
-endif(ENABLE_NETCDF)
-
-if(ENABLE_EXODUS)
-  include(cmake/exodus.cmake)
-endif(ENABLE_EXODUS)
-
 if(ENABLE_METIS)
   if(METIS_MODEL STREQUAL "parallel")
     include(cmake/parmetis.cmake)
   else(METIS_MODEL STREQUAL "serial")
     include(cmake/metis.cmake)
   endif()
-endif()
-
-if(ENABLE_SCOTCH)
-  include(cmake/scotch.cmake)
 endif()
 
 if(ENABLE_GASNET)
