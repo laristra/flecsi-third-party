@@ -1,4 +1,4 @@
-From 77ace48a25e573b69f81905e0b1dd7166d53e4ca Mon Sep 17 00:00:00 2001
+From a8cc033029b9f0a2243eb0dbf41a52deeed6b79d Mon Sep 17 00:00:00 2001
 From: Christoph Junghans <junghans@lanl.gov>
 Date: Wed, 10 May 2017 13:52:45 -0600
 Subject: [PATCH] cmake: link mpi_interop against mpi
@@ -8,7 +8,7 @@ Subject: [PATCH] cmake: link mpi_interop against mpi
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/examples/mpi_interop/CMakeLists.txt b/examples/mpi_interop/CMakeLists.txt
-index c76a21c..75b6f6f 100644
+index c76a21c..dd2f58c 100644
 --- a/examples/mpi_interop/CMakeLists.txt
 +++ b/examples/mpi_interop/CMakeLists.txt
 @@ -22,8 +22,11 @@ if(NOT Legion_SOURCE_DIR)
@@ -19,8 +19,8 @@ index c76a21c..75b6f6f 100644
 +
  add_executable(mpi_interop mpi_interop.cc)
 -target_link_libraries(mpi_interop Legion::Legion)
-+target_link_libraries(mpi_interop Legion::Legion ${MPI_LIBRARIES})
-+target_include_directories(mpi_interop PRIVATE ${MPI_INCLUDE_DIRS})
++target_link_libraries(mpi_interop Legion::Legion ${MPI_CXX_LIBRARIES})
++target_include_directories(mpi_interop PRIVATE ${MPI_C_INCLUDE_PATH})
  if(Legion_ENABLE_TESTING)
    add_test(NAME mpi_interop COMMAND $<TARGET_FILE:mpi_interop>)
  endif()
