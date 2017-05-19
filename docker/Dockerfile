@@ -17,7 +17,7 @@ RUN mkdir -p build && cd build && \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
           .. && make || \
-	  { cat legion-prefix/src/legion-stamp/legion-build-err.log; exit 1; }
+	  { cat parmetis-prefix/src/parmetis-stamp/parmetis-build-*.log; exit 1; }
 
 USER root
 RUN chown -R root:root /usr/local
