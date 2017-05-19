@@ -10,11 +10,13 @@ elseif(GASNet_CONDUIT STREQUAL "mpi")
 else() 
   message (ERROR "wrong Gasnet conduit specified")
 endif ()
+
+find_package(MPI REQUIRED)
  
 message(STATUS "Building ${GASNET_NAME}")
 ExternalProject_Add(${GASNET_NAME}
  URL ${GASNET_URL}/${GASNET_GZ}
  URL_MD5 ${GASNET_MD5}
- CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${CMAKE_INSTALL_PREFIX}  ${CONF_OPTS} --disable-ibv --enable-par --enable-mpi-compat  "CC=${CMAKE_C_COMPILER} -fPIC" "CXX=${CMAKE_CXX_COMPILER} -fPIC" "MPI_CC=mpicc -fPIC"
+ CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${CMAKE_INSTALL_PREFIX}  ${CONF_OPTS} --disable-ibv --enable-par --enable-mpi-compat  "CC=${CMAKE_C_COMPILER} -fPIC" "CXX=${CMAKE_CXX_COMPILER} -fPIC" "MPI_CC=${MPI_C_COMPILER} -fPIC"
  LOG_BUILD 1
 )
