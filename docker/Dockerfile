@@ -16,8 +16,8 @@ RUN mkdir -p build && cd build && \
     cmake -DBUILD_SHARED_LIBS=ON \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
-          .. && make VERBOSE=1 || \
-	  { cat parmetis-prefix/src/parmetis-stamp/parmetis-build-*.log; exit 1; }
+          .. && make -j2 || \
+	  { cat legion-prefix/src/legion-stamp/legion-build-err.log; exit 1; }
 
 USER root
 RUN chown -R root:root /usr/local
