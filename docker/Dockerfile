@@ -25,7 +25,7 @@ USER flecsi
 
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
-RUN if [ ${TRAVIS_BRANCH} = master ]; then \
+RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
       git clone --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
       cd flecsi && mkdir build && cd build && \
       cmake -DENABLE_PARTITION=ON -DENABLE_IO=ON \
