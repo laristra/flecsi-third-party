@@ -28,9 +28,11 @@ script:
   - ccache -z
   - cp -r ${HOME}/.ccache ${HOME}/docker/ccache
   - if [[ ${CMAKE_BUILD_TYPE} ]]; then TAG="_${CMAKE_BUILD_TYPE}"; fi
+  - if [[ ${TRAVIS_BRANCH} != master ]]; then TAG="${TAG}_${TRAVIS_BRANCH}"; fi
   - docker build --build-arg SYSTEM_LIBS=${SYSTEM_LIBS}
                  --build-arg CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                  --build-arg TRAVIS=${TRAVIS}
+                 --build-arg TRAVIS_BRANCH=${TRAVIS_BRANCH}
                  -t ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} ${HOME}/docker/ &&
     rm -rf ${HOME}/.ccache &&
     CON=$(docker run -d ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} /bin/bash) &&
@@ -38,7 +40,8 @@ script:
   - ccache -s
 
 after_success:
-  - if [[ ${DOCKERHUB} = true && ${DOCKER_EMAIL} && ${DOCKER_USERNAME} && ${DOCKER_PASSWORD} && ${TRAVIS_PULL_REQUEST} == false && ${TRAVIS_BRANCH} == master ]]; then
+  - shopt -s extglob && [[ ${TRAVIS_BRANCH} = @(master|refactor) ]] && DEPLOY=yes
+  - if [[ ${DOCKERHUB} = true && ${DOCKER_EMAIL} && ${DOCKER_USERNAME} && ${DOCKER_PASSWORD} && ${TRAVIS_PULL_REQUEST} == false && ${DEPLOY} ]]; then
       docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
       docker push "${TRAVIS_REPO_SLUG}:${DISTRO}${TAG}";
    fi
