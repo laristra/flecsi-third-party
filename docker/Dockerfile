@@ -29,7 +29,7 @@ RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
       git clone --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
       cd flecsi && mkdir build && cd build && \
       cmake -DENABLE_PARTITION=ON -DENABLE_IO=ON \
-           -DENABLE_MPI=ON \
+           -DENABLE_MPI=ON -DENABLE_LEGION=ON \
            -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=mpilegion .. && \
       make -j2 && make test && \
       cd ../.. && \
