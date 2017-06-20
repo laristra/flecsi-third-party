@@ -17,8 +17,10 @@ env:
     - DISTRO=ubuntu SYSTEM_LIBS=ON DOCKERHUB=true
     - DISTRO=fedora_mpich SYSTEM_LIBS=OFF
     - DISTRO=fedora_mpich SYSTEM_LIBS=ON DOCKERHUB=true
+    - DISTRO=fedora_mpich SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug DOCKERHUB=true
     - DISTRO=ubuntu_mpich SYSTEM_LIBS=OFF
     - DISTRO=ubuntu_mpich SYSTEM_LIBS=ON DOCKERHUB=true
+    - DISTRO=ubuntu_mpich SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug DOCKERHUB=true
 
 script:
   - cp -vr docker ${HOME}/docker
