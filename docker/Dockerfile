@@ -30,8 +30,8 @@ RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
       cd flecsi && mkdir build && cd build && \
       cmake -DENABLE_PARTITION=ON -DENABLE_IO=ON \
            -DENABLE_MPI=ON -DENABLE_LEGION=ON \
-           -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=mpilegion .. && \
-      make -j2 && make test && \
+           -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=legion .. && \
+      make -j2 && ctest --verbose -E "(simple_task|internal_task|mapper_compaction_task|simple_function)" && \
       cd ../.. && \
       rm -rf flecsi; \
     fi;
