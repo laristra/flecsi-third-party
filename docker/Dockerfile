@@ -3,6 +3,7 @@ FROM laristra/flecsi-buildenv:fedora
 ARG SYSTEM_LIBS
 ARG CMAKE_BUILD_TYPE
 #Skip some tests
+ARG CI
 ARG TRAVIS
 ARG TRAVIS_BRANCH
 
