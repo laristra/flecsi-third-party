@@ -22,6 +22,9 @@ env:
     - DISTRO=ubuntu_mpich SYSTEM_LIBS=ON DOCKERHUB=true
     - DISTRO=ubuntu_mpich SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug DOCKERHUB=true
 
+before_script:
+  - pip install --user docker-squash
+
 script:
   - cp -vr docker ${HOME}/docker
   - sed -i "1s/fedora/${DISTRO}/" ${HOME}/docker/Dockerfile
@@ -40,6 +43,7 @@ script:
     CON=$(docker run -d ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} /bin/bash) &&
     docker cp ${CON}:/home/flecsi/.ccache ${HOME}/
   - ccache -s
+  - docker-squash -f laristra/flecsi-buildenv:${DISTRO} ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG}
 
 after_success:
   - shopt -s extglob && [[ ${TRAVIS_BRANCH} = @(master|refactor) ]] && DEPLOY=yes
