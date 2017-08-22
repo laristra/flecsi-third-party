@@ -37,6 +37,7 @@ set_property(CACHE METIS_MODEL PROPERTY STRINGS ${METIS_MODELS})
 
 #------------------------------------------------------------------------------#
 
+set(ENABLE_SCOTCH_DEFAULT OFF)
 set(ENABLE_LEGION_DEFAULT ON)
 set(ENABLE_ZLIB_DEFAULT ON)
 set(ENABLE_SZIP_DEFAULT ON)
@@ -63,6 +64,10 @@ if(USE_SYSTEM_LIBS)
     endif(METIS_FOUND)
   endif()
 
+  find_package(SCOTCH)
+  if(SCOTCH_FOUND)
+    set(ENABLE_SCOTCH_DEFAULT OFF)
+  endif(SCOTCH_FOUND)
   find_package(Legion)
   if(Legion_FOUND)
     set(ENABLE_LEGION_DEFAULT OFF)
@@ -151,6 +156,10 @@ if(ENABLE_METIS)
   else(METIS_MODEL STREQUAL "serial")
     include(cmake/metis.cmake)
   endif()
+endif()
+
+if(ENABLE_SCOTCH)
+  include(cmake/scotch.cmake)
 endif()
 
 if(ENABLE_GASNET)
