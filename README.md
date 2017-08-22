@@ -5,6 +5,8 @@ libraries.
 
 # Installation
 
+HDF5 requires CMake >= 3.1.0
+
 % module load cmake
 
 % module load git/2.11.0
