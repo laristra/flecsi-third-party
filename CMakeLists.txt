@@ -78,7 +78,7 @@ option(ENABLE_LEGION "Enable LEGION and dependencies" ${ENABLE_LEGION_DEFAULT})
 cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ${ENABLE_GASNET_DEFAULT}
                        "ENABLE_LEGION" OFF)
 #legion uses that option, too	    
-set(GASNet_CONDUITS udp mpi ibv)
+set(GASNet_CONDUITS udp mpi ibv psm)
 set(GASNet_CONDUIT "mpi" CACHE STRING "Select Gasnet conduit ${GASNet_CONDUITS}")
 set_property(CACHE GASNet_CONDUIT PROPERTY STRINGS ${GASNet_CONDUITS})
 option(LEGION_USE_OPENMP "enable OpenMP threads in Legion" OFF)
