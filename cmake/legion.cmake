@@ -27,5 +27,6 @@ ExternalProject_Add(${LEGION_NAME}
    ${Legion_GASNet_OPTS}
    -DLegion_USE_GASNet=ON
    -DLegion_BUILD_EXAMPLES=ON
+   -DREALM_USE_OPENMP=${LEGION_USE_OPENMP}
    <SOURCE_DIR>
 )

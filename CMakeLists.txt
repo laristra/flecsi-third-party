@@ -126,6 +126,7 @@ cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ${ENABLE_GASNET_DEFAULT}
 set(GASNet_CONDUITS udp mpi ibv psm)
 set(GASNet_CONDUIT "mpi" CACHE STRING "Select Gasnet conduit ${GASNet_CONDUITS}")
 set_property(CACHE GASNet_CONDUIT PROPERTY STRINGS ${GASNet_CONDUITS})
+option(LEGION_USE_OPENMP "enable OpenMP threads in Legion" OFF)
 
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
