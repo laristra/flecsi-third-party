@@ -7,3 +7,6 @@
 [submodule "cinch"]
 	path = cinch
 	url = ../cinch.git
+[submodule "hpx"]
+	path = hpx
+	url = ../../STEllAR-GROUP/hpx
