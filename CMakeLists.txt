@@ -130,6 +130,8 @@ option(LEGION_USE_OPENMP "enable OpenMP threads in Legion" OFF)
 
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
+option(ENABLE_HPX "Enable cinch-utils and dependencies" ON)
+
 # build the libraries
 if(ENABLE_ZLIB)
   include(cmake/zlib.cmake)
@@ -177,3 +179,7 @@ endif(ENABLE_LEGION)
 if(ENABLE_CINCH_UTILS)
   include(cmake/cinch-utils.cmake)
 endif(ENABLE_CINCH_UTILS)
+
+if(ENABLE_HPX)
+  include(cmake/hpx.cmake)
+endif(ENABLE_HPX)
