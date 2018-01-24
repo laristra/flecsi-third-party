@@ -9,4 +9,4 @@
 	url = ../cinch.git
 [submodule "hpx"]
 	path = hpx
-	url = ../../STEllAR-GROUP/hpx
+	url = ../../STEllAR-GROUP/hpx.git
