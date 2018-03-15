@@ -1,7 +1,6 @@
-# third-party
+# flecsi-third-party: FleCSPH branch
 
-This project provides an easy way to build and install many third party
-libraries.
+Third-party libraries for FleCSI compatible with the [flecsph](https://github.com/laristra/flecsph) project.
 
 # Installation
 
