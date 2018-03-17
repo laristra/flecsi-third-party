@@ -1,4 +1,4 @@
-FROM laristra/flecsi-buildenv:fedora
+FROM laristra/flecsi-buildenv:fedora_charliecloud
 
 ARG SYSTEM_LIBS
 ARG CMAKE_BUILD_TYPE
