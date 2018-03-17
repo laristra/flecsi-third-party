@@ -7,14 +7,14 @@ services:
 
 env:
   matrix:
-    - DISTRO=fedora SYSTEM_LIBS=OFF
-    - DISTRO=fedora SYSTEM_LIBS=ON DOCKERHUB=true
-    - DISTRO=ubuntu SYSTEM_LIBS=OFF
+#    - DISTRO=fedora SYSTEM_LIBS=OFF
+#    - DISTRO=fedora SYSTEM_LIBS=ON DOCKERHUB=true
+#    - DISTRO=ubuntu SYSTEM_LIBS=OFF
     - DISTRO=ubuntu SYSTEM_LIBS=ON DOCKERHUB=true
-    - DISTRO=fedora_mpich SYSTEM_LIBS=OFF
-    - DISTRO=fedora_mpich SYSTEM_LIBS=ON DOCKERHUB=true
-    - DISTRO=ubuntu_mpich SYSTEM_LIBS=OFF
-    - DISTRO=ubuntu_mpich SYSTEM_LIBS=ON DOCKERHUB=true
+#    - DISTRO=fedora_mpich SYSTEM_LIBS=OFF
+#    - DISTRO=fedora_mpich SYSTEM_LIBS=ON DOCKERHUB=true
+#    - DISTRO=ubuntu_mpich SYSTEM_LIBS=OFF
+#    - DISTRO=ubuntu_mpich SYSTEM_LIBS=ON DOCKERHUB=true
     
 script:
   - cp -vr docker ${HOME}/docker
@@ -36,7 +36,7 @@ script:
   - ccache -s
 
 after_success:
-  - shopt -s extglob && [[ ${TRAVIS_BRANCH} = @(master|refactor) ]] && DEPLOY=yes
+  - shopt -s extglob && [[ ${TRAVIS_BRANCH} = @(master|refactor|charliecloud) ]] && DEPLOY=yes
   - if [[ ${DOCKERHUB} = true && ${DOCKER_USERNAME} && ${DOCKER_PASSWORD} && ${TRAVIS_PULL_REQUEST} == false && ${DEPLOY} ]]; then
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
       docker push "${TRAVIS_REPO_SLUG}:${DISTRO}${TAG}";
