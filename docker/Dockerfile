@@ -24,7 +24,7 @@ RUN mkdir -p build && cd build && \
 
 USER root
 RUN chown -R root:root /usr/local
-USER flecsi
+#USER flecsi
 
 # Build FleCSI if it is not for DockerHub and master branch
 #WORKDIR /home/flecsi
