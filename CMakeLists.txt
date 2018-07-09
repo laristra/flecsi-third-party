@@ -130,7 +130,7 @@ option(LEGION_USE_OPENMP "enable OpenMP threads in Legion" OFF)
 
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
-option(ENABLE_HPX "Enable cinch-utils and dependencies" ON)
+option(ENABLE_HPX "Enable cinch-utils and dependencies" OFF)
 
 # build the libraries
 if(ENABLE_ZLIB)
