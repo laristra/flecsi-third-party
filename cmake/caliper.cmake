@@ -1,7 +1,7 @@
 set(CALIPER caliper)
 set(CALIPER_URL ${PROJECT_SOURCE_DIR}/files)
-set(CALIPER_GZ  Caliper-1.6.0.tar.gz)
-set(CALIPER_MD5 "1b2d2a02d35856494e9c7d218f78f0ac")
+set(CALIPER_GZ  Caliper-1.7.0.tar.gz)
+set(CALIPER_MD5 "32cdd18fd5b19b1066a2de77f545a945")
 
 message(STATUS "Building ${CALIPER}")
 ExternalProject_Add(${CALIPER}
