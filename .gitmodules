@@ -1,6 +1,6 @@
 [submodule "legion"]
 	path = legion
-	url = https://gitlab.com/StanfordLegion/legion.git
+	url = ../../StanfordLegion/legion.git
 [submodule "cinch-utils"]
 	path = cinch-utils
 	url = ../cinch-utils.git
