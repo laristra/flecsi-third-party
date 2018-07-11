@@ -130,7 +130,8 @@ option(LEGION_USE_OPENMP "enable OpenMP threads in Legion" OFF)
 
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
-option(ENABLE_HPX "Enable cinch-utils and dependencies" ON)
+option(ENABLE_HPX "Enable HPX" ON)
+option(ENABLE_CALIPER "Enable CALIPER" ON)
 
 # build the libraries
 if(ENABLE_ZLIB)
@@ -183,3 +184,7 @@ endif(ENABLE_CINCH_UTILS)
 if(ENABLE_HPX)
   include(cmake/hpx.cmake)
 endif(ENABLE_HPX)
+
+if(ENABLE_CALIPER)
+  include(cmake/caliper.cmake)
+endif(ENABLE_CALIPER)
