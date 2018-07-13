@@ -31,4 +31,6 @@ IMPORTANT: set the installation path for the libraries in CMAKE_INSTALL_PREFIX.
 
 % make
 
-"make" does the installation in the path you specified.
+% make install
+
+"make install" does the installation in the path you specified.
