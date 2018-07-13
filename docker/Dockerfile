@@ -8,28 +8,35 @@ ARG TRAVIS
 ARG TRAVIS_BRANCH
 
 COPY flecsi-third-party/ /home/flecsi/tpl
+RUN rm -rf /home/flecsi/.ccache
 COPY ccache/ /home/flecsi/.ccache
 USER root
-RUN chown -R flecsi:flecsi /home/flecsi/tpl /home/flecsi/.ccache /usr/local
+RUN chown -R flecsi:flecsi /home/flecsi/tpl /home/flecsi/.ccache
 USER flecsi
 
 WORKDIR /home/flecsi/tpl
-RUN mkdir -p build && cd build && \
-    cmake -DBUILD_SHARED_LIBS=ON \
+RUN mkdir build
+WORKDIR build
+RUN ccache -z
+RUN cmake -DBUILD_SHARED_LIBS=ON \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
-          .. && make -j2;
+          -DCMAKE_INSTALL_PREFIX=/home/flecsi/tpl/build/third-party/install/ \
+          ..
+RUN make -j2
+RUN ccache -s
 
 USER root
-RUN chown -R root:root /usr/local
+RUN make install
 USER flecsi
+RUN ccache -s
 
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
 RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
       git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
       cd flecsi && mkdir build && cd build && \
-      cmake -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=legion -DENABLE_LEGION=ON .. && \
+      cmake -DLegion_ROOT=/home/flecsi/tpl/build/third-party/install/ -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=legion -DENABLE_LEGION=ON .. && \
       make -j2 && make test && \
       cd ../.. && \
       rm -rf flecsi; \
