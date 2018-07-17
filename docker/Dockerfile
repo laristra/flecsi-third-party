@@ -22,6 +22,7 @@ RUN ccache -z
 RUN cmake -DBUILD_SHARED_LIBS=ON \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
+          -DGASNet_ROOT_DIR=/home/flecsi/tpl/install \
           -DCMAKE_INSTALL_PREFIX=/home/flecsi/tpl/install/ \
           ..
 RUN make -j2
@@ -37,7 +38,10 @@ WORKDIR /home/flecsi
 RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
       git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
       cd flecsi && mkdir build && cd build && \
-      cmake -DLegion_ROOT=/home/flecsi/tpl/install/ -DENABLE_UNIT_TESTS=ON -DFLECSI_RUNTIME_MODEL=legion -DENABLE_LEGION=ON .. && \
+      cmake -DLegion_ROOT=/home/flecsi/tpl/install/ \
+            -DENABLE_UNIT_TESTS=ON \
+            -DFLECSI_RUNTIME_MODEL=legion \
+            -DENABLE_LEGION=ON .. && \
       make -j2 && make test && \
       cd ../.. && \
       rm -rf flecsi; \
