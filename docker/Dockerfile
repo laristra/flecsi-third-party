@@ -22,16 +22,14 @@ RUN ccache -z
 RUN cmake -DBUILD_SHARED_LIBS=ON \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
-          -DGASNet_ROOT_DIR=/home/flecsi/tpl/install \
           -DCMAKE_INSTALL_PREFIX=/home/flecsi/tpl/install/ \
           ..
 RUN make -j2
 RUN ccache -s
 
 USER root
-RUN make install
+RUN make install DESTDIR=$PWD
 USER flecsi
-RUN ccache -s
 
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
