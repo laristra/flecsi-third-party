@@ -21,8 +21,8 @@ message(STATUS "Building ${GASNET_NAME}")
 ExternalProject_Add(${GASNET_NAME}
  URL ${GASNET_URL}/${GASNET_GZ}
  URL_MD5 ${GASNET_MD5}
- PREFIX third-party
- INSTALL_DIR third-party/install
+ PREFIX ${GASNET_NAME}
+ INSTALL_DIR ${GASNET_NAME}/install
  CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=<INSTALL_DIR>  ${CONF_OPTS}  --enable-par --enable-mpi-compat  "CC=${CMAKE_C_COMPILER} -fPIC" "CXX=${CMAKE_CXX_COMPILER} -fPIC" "MPI_CC=${MPI_C_COMPILER} -fPIC"
  LOG_BUILD 1
 )

@@ -8,8 +8,8 @@ message(STATUS "Building ${ZLIB_NAME}")
 ExternalProject_Add(${ZLIB_NAME}
   URL ${ZLIB_URL}/${ZLIB_TGZ}
   URL_MD5 ${ZLIB_MD5}
-  PREFIX third-party
-  INSTALL_DIR third-party/install
+  PREFIX ${ZLIB_NAME}
+  INSTALL_DIR ${ZLIB_NAME}/install
   UPDATE_COMMAND ""
   CMAKE_ARGS
     -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}

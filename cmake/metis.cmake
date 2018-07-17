@@ -12,8 +12,8 @@ message(STATUS "Building ${METIS_NAME}")
 ExternalProject_Add(${METIS_NAME}
  URL ${METIS_URL}/${METIS_GZ}
  URL_MD5 ${METIS_MD5}
- PREFIX third-party
- INSTALL_DIR third-party/install
+ PREFIX ${METIS_NAME}
+ INSTALL_DIR ${METIS_NAME}/install
  UPDATE_COMMAND ""
  PATCH_COMMAND ${PATCH_COMMAND}
  CMAKE_ARGS

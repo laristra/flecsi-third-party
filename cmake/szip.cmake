@@ -8,8 +8,8 @@ message(STATUS "Building ${SZIP_NAME}")
 ExternalProject_Add(${SZIP_NAME}
   URL ${SZIP_URL}/${SZIP_TGZ}
   URL_MD5 ${SZIP_MD5}
-  PREFIX third-party
-  INSTALL_DIR third-party/install
+  PREFIX ${SZIP_NAME}
+  INSTALL_DIR ${SZIP_NAME}/install
   UPDATE_COMMAND ""
   CMAKE_ARGS
     -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
