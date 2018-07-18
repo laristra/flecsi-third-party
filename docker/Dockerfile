@@ -16,28 +16,28 @@ USER flecsi
 
 WORKDIR /home/flecsi/tpl
 RUN mkdir build
-RUN mkdir install
 WORKDIR build
 RUN ccache -z
 RUN cmake -DBUILD_SHARED_LIBS=ON \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
-          -DCMAKE_INSTALL_PREFIX=/home/flecsi/tpl/install/ \
           ..
 RUN make -j2
 RUN ccache -s
 
+RUN make DESTDIR=$PWD install
+
 USER root
-RUN make install DESTDIR=$PWD
+RUN make install
 USER flecsi
+
 
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
 RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
       git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
       cd flecsi && mkdir build && cd build && \
-      cmake -DLegion_ROOT=/home/flecsi/tpl/install/ \
-            -DENABLE_UNIT_TESTS=ON \
+      cmake -DENABLE_UNIT_TESTS=ON \
             -DFLECSI_RUNTIME_MODEL=legion \
             -DENABLE_LEGION=ON .. && \
       make -j2 && make test && \
