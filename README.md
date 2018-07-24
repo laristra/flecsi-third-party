@@ -31,4 +31,11 @@ IMPORTANT: set the installation path for the libraries in CMAKE_INSTALL_PREFIX.
 
 % make
 
-"make" does the installation in the path you specified.
+"make install" does re-installation in the path you specified.
+
+# Adding to third-party
+
+1. Either add tar file to `files/` or link in the source from the repo
+2. Add `<your-library-name>.cmake` in `cmake/`
+  - Reference `caliper.cmake` if tar file is added to `files/`
+  - Reference `cinch-utils.cmake` if the repo source is linked in
