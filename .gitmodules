@@ -10,3 +10,6 @@
 [submodule "hpx"]
 	path = hpx
 	url = ../../STEllAR-GROUP/hpx.git
+[submodule "boost"]
+	path = boost
+	url = ../../boostorg/boost.git

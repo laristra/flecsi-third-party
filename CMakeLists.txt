@@ -45,8 +45,15 @@ set(ENABLE_HDF5_DEFAULT ON)
 set(ENABLE_NETCF_DEFAULT ON)
 set(ENABLE_GASNET_DEFAULT ON)
 set(ENABLE_METIS_DEFAULT ON)
+set(ENABLE_BOOST_DEFAULT ON)
 option(USE_SYSTEM_LIBS "Check for system libraries and use them if found" OFF)
 if(USE_SYSTEM_LIBS)
+
+  find_package(Boost)
+  if (Boost_FOUND)
+    set(ENABLE_BOOST_DEFAULT OFF)
+  endif()
+
   find_package(EXODUSII)
   if(EXODUSII_FOUND)
     set(ENABLE_EXODUS_DEFAULT OFF)
@@ -133,6 +140,11 @@ option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 option(ENABLE_HPX "Enable HPX" ON)
 option(ENABLE_CALIPER "Enable CALIPER" ON)
 
+cmake_dependent_option(ENABLE_BOOST "Enable boost" ${ENABLE_BOOST_DEFAULT}
+                       "ENABLE_HPX" OFF)
+
+
+
 # build the libraries
 if(ENABLE_ZLIB)
   include(cmake/zlib.cmake)
@@ -149,6 +161,10 @@ endif(ENABLE_HDF5)
 if(ENABLE_NETCDF)
   include(cmake/netcdf.cmake)
 endif(ENABLE_NETCDF)
+
+if(ENABLE_BOOST)
+  include(cmake/boost.cmake)
+endif()
 
 if(ENABLE_EXODUS)
   include(cmake/exodus.cmake)

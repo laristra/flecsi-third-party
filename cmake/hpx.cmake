@@ -1,7 +1,12 @@
 set(HPX_NAME hpx)
 
+if (BOOST_ROOT)
+  set(BOOST_CONFIG "-DBOOST_ROOT:FILEPATH=${BOOST_ROOT}")
+endif()
+
 message(STATUS "Building ${HPX_NAME}")
 ExternalProject_Add(${HPX_NAME}
+ DEPENDS ${BOOST_NAME}
  SOURCE_DIR ${PROJECT_SOURCE_DIR}/hpx
  PREFIX ${HPX_NAME}
  INSTALL_DIR ${HPX_NAME}/install
@@ -18,6 +23,7 @@ ExternalProject_Add(${HPX_NAME}
    -DHPX_WITH_EXAMPLES=OFF
    -DHPX_WITH_TESTS=OFF
    -DHPX_WITH_MALLOC=system
+   ${BOOST_CONFIG}
    <SOURCE_DIR>
 )
 ExternalProject_get_property(${HPX_NAME} INSTALL_DIR)
