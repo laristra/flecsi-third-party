@@ -110,6 +110,7 @@ else(USE_SYSTEM_LIBS)
 endif(USE_SYSTEM_LIBS)
 
 # third party libraries to build
+option(ENABLE_MPICH "Enable building of mpich" OFF) 
 option(ENABLE_EXODUS "Enable Exodus and dependencies" ${ENABLE_EXODUS_DEFAULT}) 
 cmake_dependent_option(ENABLE_HDF5 "Enable HDF5" ${ENABLE_HDF5_DEFAULT}
                        "ENABLE_EXODUS" OFF)
@@ -146,6 +147,10 @@ cmake_dependent_option(ENABLE_BOOST "Enable boost" ${ENABLE_BOOST_DEFAULT}
 
 
 # build the libraries
+if(ENABLE_MPICH)
+  include(cmake/mpich.cmake)
+endif()
+
 if(ENABLE_ZLIB)
   include(cmake/zlib.cmake)
 endif(ENABLE_ZLIB)

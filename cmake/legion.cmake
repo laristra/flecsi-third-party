@@ -6,7 +6,9 @@ endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DENABLE_LEGION_TLS")
 
-find_package(MPI REQUIRED)
+if (NOT ENABLE_MPICH)
+  find_package(MPI REQUIRED)
+endif()
 
 ExternalProject_get_property(${GASNET_NAME} INSTALL_DIR)
 set(GASNET_INSTALL_DIR ${INSTALL_DIR})

@@ -15,7 +15,9 @@ else()
   message (ERROR "wrong Gasnet conduit specified")
 endif ()
 
-find_package(MPI REQUIRED)
+if (NOT ENABLE_MPICH)
+  find_package(MPI REQUIRED)
+endif()
  
 message(STATUS "Building ${GASNET_NAME}")
 ExternalProject_Add(${GASNET_NAME}

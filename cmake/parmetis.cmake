@@ -9,7 +9,9 @@ if(METIS_INT64)
 endif(METIS_INT64)
 
 
-find_package(MPI REQUIRED)
+if (NOT ENABLE_MPICH)
+  find_package(MPI REQUIRED)
+endif()
 
 message(STATUS "Building ${PARMETIS_NAME}")
 ExternalProject_Add(${PARMETIS_NAME}
