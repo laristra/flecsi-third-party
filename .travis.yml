@@ -48,3 +48,6 @@ after_success:
 
 cache:
   - ccache
+  
+git:
+  depth: 1
