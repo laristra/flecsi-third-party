@@ -3,6 +3,12 @@ set(MPICH_URL ${PROJECT_SOURCE_DIR}/files)
 set(MPICH_TGZ mpich-3.2.1.tar.gz)
 set(MPICH_MD5 "e175452f4d61646a52c73031683fc375")
 
+if (BUILD_SHARED_LIBS)
+  set( MPICH_ENABLE_SHARED yes)
+else()
+  set( MPICH_ENABLE_SHARED no)
+endif()
+
 message(STATUS "Building ${MPICH_NAME}")
 ExternalProject_Add(${MPICH_NAME}
   URL ${MPICH_URL}/${MPICH_TGZ}
@@ -17,7 +23,7 @@ ExternalProject_Add(${MPICH_NAME}
     CCFLAGS=${CMAKE_C_FLAGS}
     CXX=${CMAKE_CXX_COMPILER}
     CXXFLAGS=${CMAKE_CXX_FLAGS}
-    ./configure --prefix=<INSTALL_DIR>
+    ./configure --prefix=<INSTALL_DIR> --enable-shared=${MPICH_ENABLE_SHARED}
   BUILD_COMMAND make
   INSTALL_COMMAND make install
   BUILD_IN_SOURCE 1

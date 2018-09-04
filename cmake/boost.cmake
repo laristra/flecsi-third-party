@@ -9,13 +9,19 @@ else()
     "Unknown boost toolset for compiler ${CMAKE_C_COMPILER_ID}")
 endif()
 
+if (BUILD_SHARED_LIBS)
+  set( BOOST_LINK_TYPE shared )
+else()
+  set( BOOST_LINK_TYPE static )
+endif()
+
 message(STATUS "Building ${BOOST_NAME}")
 ExternalProject_Add(${BOOST_NAME}
   SOURCE_DIR ${PROJECT_SOURCE_DIR}/boost
   PREFIX ${BOOST_NAME}
   INSTALL_DIR ${BOOST_NAME}/install
   UPDATE_COMMAND ""
-  CONFIGURE_COMMAND ./bootstrap.sh --with-toolset=${BOOST_TOOLSET}
+  CONFIGURE_COMMAND ./bootstrap.sh --with-toolset=${BOOST_TOOLSET} link=${BOOST_LINK_TYPE}
   BUILD_COMMAND ./b2 install --prefix=<INSTALL_DIR>
   INSTALL_COMMAND ""
   BUILD_IN_SOURCE 1
