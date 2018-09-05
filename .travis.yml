@@ -54,5 +54,4 @@ cache:
   - ccache
   
 git:
-  depth: 1
   submodules: false
