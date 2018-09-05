@@ -20,6 +20,10 @@ env:
     - DISTRO=fedora_mpich SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug
     - DISTRO=ubuntu_mpich SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug
     
+before_install:
+  - git config -f .gitmodules submodule.boost.shallow true
+  - git submodule update --init --recursive
+ 
 script:
   - cp -vr docker ${HOME}/docker
   - sed -i "1s/fedora/${DISTRO}/" ${HOME}/docker/Dockerfile
@@ -50,4 +54,4 @@ cache:
   - ccache
   
 git:
-  depth: 1
+  submodules: false
