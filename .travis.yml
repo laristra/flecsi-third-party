@@ -21,7 +21,8 @@ env:
     - DISTRO=ubuntu_mpich SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug
     
 before_install:
-  - git submodule update --init --recursive --depth 1
+  - git config -f .gitmodules submodule.boost.shallow true
+  - git submodule update --init --recursive
  
 script:
   - cp -vr docker ${HOME}/docker
