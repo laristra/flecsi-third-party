@@ -21,7 +21,8 @@ env:
     - DISTRO=ubuntu_mpich SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug
     
 before_install:
-  - du -sh
+  - df -h
+  - du -sh *
   - git config -f .gitmodules submodule.boost.shallow false
   - git submodule update --init --recursive --recommend-shallow
  
