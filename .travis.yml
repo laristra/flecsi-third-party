@@ -23,6 +23,9 @@ env:
 before_install:
   - df -h
   - du -sh *
+  - git config -f .gitmodules submodule.hpx.shallow true
+  - git config -f .gitmodules submodule.legion.shallow true
+  - git config -f .gitmodules submodule.boost.shallow true
   - git submodule update --init --recursive --recommend-shallow
  
 script:
