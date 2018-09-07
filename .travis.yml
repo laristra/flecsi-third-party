@@ -23,7 +23,6 @@ env:
 before_install:
   - df -h
   - du -sh *
-  - git config -f .gitmodules submodule.boost.shallow false
   - git submodule update --init --recursive --recommend-shallow
  
 script:
