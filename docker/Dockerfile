@@ -9,9 +9,9 @@ ARG TRAVIS_BRANCH
 
 RUN pwd
 RUN ls
-COPY flecsi-third-party/ /home/flecsi/tpl
-RUN rm -rf /home/flecsi/.ccache
-COPY ccache/ /home/flecsi/.ccache
+RUN rm -rf /home/flecsi/tpl /home/flecsi/.ccache
+RUN ln -s $PWD/flecsi-third-party /home/flecsi/tpl
+RUN ln -s $PWD/ccache /home/flecsi/.ccache
 USER root
 RUN df -h
 RUN chown -R flecsi:flecsi /home/flecsi/tpl /home/flecsi/.ccache
