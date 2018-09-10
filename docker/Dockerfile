@@ -26,18 +26,3 @@ RUN make DESTDIR=$PWD install
 
 USER root
 RUN make install
-USER flecsi
-
-
-# Build FleCSI if it is not for DockerHub and master branch
-WORKDIR /home/flecsi
-RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
-      git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
-      cd flecsi && mkdir build && cd build && \
-      cmake -DENABLE_UNIT_TESTS=ON \
-            -DFLECSI_RUNTIME_MODEL=legion \
-            -DENABLE_LEGION=ON .. && \
-      make -j2 && make test && \
-      cd ../.. && \
-      rm -rf flecsi; \
-    fi;
