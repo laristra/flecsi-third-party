@@ -8,10 +8,8 @@ ARG TRAVIS
 ARG TRAVIS_BRANCH
 
 RUN pwd
-RUN ls
-COPY flecsi-third-party/ /home/flecsi/tpl
+RUN mkdir -p /home/flecsi/tpl
 USER root
-RUN df -h
 RUN chown -R flecsi:flecsi /home/flecsi/tpl
 USER flecsi
 
@@ -21,7 +19,7 @@ WORKDIR build
 RUN cmake -DBUILD_SHARED_LIBS=ON \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
-          ..
+          /home/flecsi/flecsi-third-party
 RUN make -j2
 
 RUN make DESTDIR=$PWD install
