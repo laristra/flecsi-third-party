@@ -18,7 +18,7 @@ WORKDIR build
 RUN cmake -DBUILD_SHARED_LIBS=ON \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
-          /home/flecsi/flecsi-third-party
+          ..
 RUN make -j2
 
 RUN make DESTDIR=$PWD install
