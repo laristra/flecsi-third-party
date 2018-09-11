@@ -7,8 +7,7 @@ ARG CI
 ARG TRAVIS
 ARG TRAVIS_BRANCH
 
-RUN pwd
-RUN mkdir -p /home/flecsi/tpl
+COPY flecsi-third-party/ /home/flecsi/tpl
 USER root
 RUN chown -R flecsi:flecsi /home/flecsi/tpl
 USER flecsi

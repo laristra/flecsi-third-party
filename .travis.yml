@@ -24,6 +24,7 @@ script:
   - cp -vr docker ${HOME}/docker
   - sed -i "1s/fedora/${DISTRO}/" ${HOME}/docker/Dockerfile
   - cd ../../
+  - mv -v ${TRAVIS_REPO_SLUG} $HOME/docker
   - if [[ ${CMAKE_BUILD_TYPE} ]]; then TAG="_${CMAKE_BUILD_TYPE}"; fi
   - if [[ ${TRAVIS_BRANCH} != master ]]; then TAG="${TAG}_${TRAVIS_BRANCH//[^a-zA-Z0-9]/_}"; fi
   - docker build --build-arg SYSTEM_LIBS=${SYSTEM_LIBS}
@@ -31,7 +32,7 @@ script:
                  --build-arg CI=${CI} --build-arg TRAVIS=${TRAVIS}
                  --build-arg TRAVIS_BRANCH=${TRAVIS_BRANCH}
                  -t ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} ${HOME}/docker/ &&
-    CON=$(docker run -v ${TRAVIS_REPO_SLUG}:/home/flecsi/flecsi-third-party -d ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} /bin/bash)
+    CON=$(docker run -d ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} /bin/bash)
 
 after_success:
   - shopt -s extglob && [[ ${TRAVIS_BRANCH} = @(master|refactor) ]] && DEPLOY=yes
