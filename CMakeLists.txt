@@ -20,6 +20,8 @@ else()
     set(CMAKE_LIBRARY_SUFFIX ${CMAKE_STATIC_LIBRARY_SUFFIX})
 endif()
 
+option(USE_INSTALL_TARGET "Use a seperate 'make install' target" ON)
+
 set(ENABLE_EXODUS_DEFAULT ON)
 
 #------------------------------------------------------------------------------#

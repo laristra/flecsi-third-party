@@ -8,12 +8,18 @@ if(METIS_INT64)
    set(PATCH_COMMAND patch -p1 < ${PROJECT_SOURCE_DIR}/patches/metis-5.1.0-datatype.patch)
 endif(METIS_INT64)
 
+if ( USE_INSTALL_TARGET )
+  set( _install_dir ${METIS_NAME}/install )
+else()
+  set( _install_dir ${CMAKE_INSTALL_PREFIX} )
+endif()
+
 message(STATUS "Building ${METIS_NAME}")
 ExternalProject_Add(${METIS_NAME}
  URL ${METIS_URL}/${METIS_GZ}
  URL_MD5 ${METIS_MD5}
  PREFIX ${METIS_NAME}
- INSTALL_DIR ${METIS_NAME}/install
+ INSTALL_DIR ${_install_dir}
  UPDATE_COMMAND ""
  PATCH_COMMAND ${PATCH_COMMAND}
  CMAKE_ARGS
@@ -28,4 +34,7 @@ ExternalProject_Add(${METIS_NAME}
    LOG_BUILD 1
 )
 ExternalProject_get_property(${METIS_NAME} INSTALL_DIR)
-install(DIRECTORY ${INSTALL_DIR}/ DESTINATION ${CMAKE_INSTALL_PREFIX} USE_SOURCE_PERMISSIONS)
+if ( USE_INSTALL_TARGET )
+  install(DIRECTORY ${INSTALL_DIR}/ DESTINATION ${CMAKE_INSTALL_PREFIX}
+    USE_SOURCE_PERMISSIONS)
+endif()

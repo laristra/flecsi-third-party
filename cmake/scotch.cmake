@@ -10,13 +10,19 @@ if (NOT FLEX)
             "'flex' lexical parser not found. Cannot build scotch." )
 endif()
 
+if ( USE_INSTALL_TARGET )
+  set( _install_dir ${SCOTCH_NAME}/install )
+else()
+  set( _install_dir ${CMAKE_INSTALL_PREFIX} )
+endif()
+
 message(STATUS "Building ${SCOTCH_NAME}")
 ExternalProject_Add( ${SCOTCH_NAME}
  DEPENDS ${ZLIB_PACKAGE_NAME}
  URL ${SCOTCH_URL}/${SCOTCH_GZ}
  URL_MD5 ${SCOTCH_MD5}
  PREFIX ${SCOTCH_NAME}
- INSTALL_DIR ${SCOTCH_NAME}/install
+ INSTALL_DIR ${_install_dir}
  UPDATE_COMMAND ""
  CMAKE_ARGS
     -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
@@ -32,4 +38,7 @@ ExternalProject_Add( ${SCOTCH_NAME}
  LOG_BUILD 1
 )
 ExternalProject_get_property(${SCOTCH_NAME} INSTALL_DIR)
-install(DIRECTORY ${INSTALL_DIR}/ DESTINATION ${CMAKE_INSTALL_PREFIX} USE_SOURCE_PERMISSIONS)
+if ( USE_INSTALL_TARGET )
+  install(DIRECTORY ${INSTALL_DIR}/ DESTINATION ${CMAKE_INSTALL_PREFIX}
+    USE_SOURCE_PERMISSIONS)
+endif()

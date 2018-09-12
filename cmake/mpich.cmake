@@ -3,10 +3,18 @@ set(MPICH_URL ${PROJECT_SOURCE_DIR}/files)
 set(MPICH_TGZ mpich-3.2.1.tar.gz)
 set(MPICH_MD5 "e175452f4d61646a52c73031683fc375")
 
+set( MPICH_ARGS )
+
 if (BUILD_SHARED_LIBS)
-  set( MPICH_ENABLE_SHARED yes)
+  list( APPEND MPICH_ARGS "--enable-shared=yes" )
 else()
-  set( MPICH_ENABLE_SHARED no)
+  list( APPEND MPICH_ARGS "--enable-shared=no" )
+endif()
+
+if ( USE_INSTALL_TARGET )
+  set( _install_dir ${MPICH_NAME}/install )
+else()
+  set( _install_dir ${CMAKE_INSTALL_PREFIX} )
 endif()
 
 message(STATUS "Building ${MPICH_NAME}")
@@ -14,7 +22,7 @@ ExternalProject_Add(${MPICH_NAME}
   URL ${MPICH_URL}/${MPICH_TGZ}
   URL_MD5 ${MPICH_MD5}
   PREFIX ${MPICH_NAME}
-  INSTALL_DIR ${MPICH_NAME}/install
+  INSTALL_DIR ${_install_dir}
   UPDATE_COMMAND ""
   CONFIGURE_COMMAND 
     FC=${CMAKE_Fortran_COMPILER}
@@ -23,7 +31,7 @@ ExternalProject_Add(${MPICH_NAME}
     CCFLAGS=${CMAKE_C_FLAGS}
     CXX=${CMAKE_CXX_COMPILER}
     CXXFLAGS=${CMAKE_CXX_FLAGS}
-    ./configure --prefix=<INSTALL_DIR> --enable-shared=${MPICH_ENABLE_SHARED}
+    ./configure --prefix=<INSTALL_DIR> ${MPICH_ARGS}
   BUILD_COMMAND make
   INSTALL_COMMAND make install
   BUILD_IN_SOURCE 1
@@ -38,4 +46,6 @@ set(MPICH_LIBRARY_DIR ${MPICH_ROOT}/lib)
 set(MPI_C_COMPILER ${INSTALL_DIR}/bin/mpicc)
 set(MPI_CXX_COMPILER ${INSTALL_DIR}/bin/mpicxx)
 
-install(DIRECTORY ${INSTALL_DIR}/ DESTINATION ${CMAKE_INSTALL_PREFIX} USE_SOURCE_PERMISSIONS)
+if ( USE_INSTALL_TARGET )
+  install(DIRECTORY ${INSTALL_DIR}/ DESTINATION ${CMAKE_INSTALL_PREFIX} USE_SOURCE_PERMISSIONS)
+endif()

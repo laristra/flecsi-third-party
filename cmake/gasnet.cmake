@@ -15,18 +15,31 @@ else()
   message (ERROR "wrong Gasnet conduit specified")
 endif ()
 
-if (NOT ENABLE_MPICH)
+if (ENABLE_MPICH)
+  set( GASNET_DEPENDS ${MPICH_NAME} )
+else()
   find_package(MPI REQUIRED)
 endif()
  
+if ( USE_INSTALL_TARGET )
+  set( _install_dir ${GASNET_NAME}/install )
+else()
+  set( _install_dir ${CMAKE_INSTALL_PREFIX} )
+endif()
+
 message(STATUS "Building ${GASNET_NAME}")
 ExternalProject_Add(${GASNET_NAME}
+ DEPENDS ${GASNET_DEPENDS}
  URL ${GASNET_URL}/${GASNET_GZ}
  URL_MD5 ${GASNET_MD5}
  PREFIX ${GASNET_NAME}
- INSTALL_DIR ${GASNET_NAME}/install
+ INSTALL_DIR ${_install_dir}
  CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=<INSTALL_DIR>  ${CONF_OPTS}  --enable-par --enable-mpi-compat  "CC=${CMAKE_C_COMPILER} -fPIC" "CXX=${CMAKE_CXX_COMPILER} -fPIC" "MPI_CC=${MPI_C_COMPILER} -fPIC"
  LOG_BUILD 1
 )
 ExternalProject_get_property(${GASNET_NAME} INSTALL_DIR)
-install(DIRECTORY ${INSTALL_DIR}/ DESTINATION ${CMAKE_INSTALL_PREFIX} USE_SOURCE_PERMISSIONS)
+
+if ( USE_INSTALL_TARGET )
+  install(DIRECTORY ${INSTALL_DIR}/ DESTINATION ${CMAKE_INSTALL_PREFIX}
+    USE_SOURCE_PERMISSIONS)
+endif()
