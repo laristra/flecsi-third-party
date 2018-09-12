@@ -8,6 +8,7 @@ ARG TRAVIS
 ARG TRAVIS_BRANCH
 
 COPY flecsi-third-party/ /home/flecsi/tpl
+COPY spinner.sh /home/flecsi/tpl/.
 USER root
 RUN chown -R flecsi:flecsi /home/flecsi/tpl
 USER flecsi
@@ -19,7 +20,7 @@ RUN cmake -DBUILD_SHARED_LIBS=ON \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
           ..
-RUN make -j2
+RUN ../spinner.sh make -j2
 
 RUN make DESTDIR=$PWD install
 
