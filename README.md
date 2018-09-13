@@ -11,7 +11,7 @@ HDF5 requires CMake >= 3.1.0
 
 % module load git/2.11.0
 
-% module load gcc/5.3.0
+% module load gcc/7.3.0
 
 % module load openmpi/1.10.5
 
