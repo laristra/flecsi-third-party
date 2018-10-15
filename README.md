@@ -31,7 +31,7 @@ IMPORTANT: set the installation path for the libraries in CMAKE_INSTALL_PREFIX.
 
 % make
 
-"make install" does re-installation in the path you specified.
+% make install
 
 ## Adding to Third-Party
 
