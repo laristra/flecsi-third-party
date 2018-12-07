@@ -1,7 +1,7 @@
 set(GASNET_NAME gasnet)
 set(GASNET_URL ${PROJECT_SOURCE_DIR}/files)
-set(GASNET_GZ  GASNet-1.26.4.tar)
-set(GASNET_MD5 "ff204fe3df02a92d485371240999d395")
+set(GASNET_GZ  GASNet-1.32.0.tar)
+set(GASNET_MD5 "1dd356195501ece76c2063e1e78914a0")
 
 if(GASNet_CONDUIT STREQUAL "udp")
    set(CONF_OPTS --enable-udp --disable-mpi --disable-ibv)
