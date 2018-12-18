@@ -36,8 +36,8 @@ USER flecsi
 WORKDIR /home/flecsi
 RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
       git clone -b stable/pre-refactor-112918 --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
-      git submodule update --init --recursive && \
-      cd flecsi && mkdir build && cd build && \
+      cd flecsi && git submodule update --init --recursive && \
+      mkdir build && cd build && \
       cmake -DENABLE_UNIT_TESTS=ON \
             -DFLECSI_RUNTIME_MODEL=legion \
             -DENABLE_LEGION=ON .. && \
