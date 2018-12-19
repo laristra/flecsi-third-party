@@ -46,5 +46,10 @@ after_success:
       docker push "${TRAVIS_REPO_SLUG}:${DISTRO}${TAG}";
    fi
 
+branches:
+  only:
+  - master
+  -  /^stable\/.*$/
+
 cache:
   - ccache
