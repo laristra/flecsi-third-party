@@ -35,8 +35,9 @@ USER flecsi
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
 RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
-      git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
-      cd flecsi && mkdir build && cd build && \
+      git clone -b stable/pre-refactor-112918 --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
+      cd flecsi && git submodule update --init --recursive && \
+      mkdir build && cd build && \
       cmake -DENABLE_UNIT_TESTS=ON \
             -DFLECSI_RUNTIME_MODEL=legion \
             -DENABLE_LEGION=ON .. && \
