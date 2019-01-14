@@ -20,7 +20,7 @@ else()
     set(CMAKE_LIBRARY_SUFFIX ${CMAKE_STATIC_LIBRARY_SUFFIX})
 endif()
 
-set(ENABLE_EXODUS_DEFAULT ON)
+set(ENABLE_EXODUS_DEFAULT OFF)
 
 #------------------------------------------------------------------------------#
 # Add options for METIS model selection
@@ -39,12 +39,12 @@ set_property(CACHE METIS_MODEL PROPERTY STRINGS ${METIS_MODELS})
 
 set(ENABLE_SCOTCH_DEFAULT OFF)
 set(ENABLE_LEGION_DEFAULT ON)
-set(ENABLE_ZLIB_DEFAULT ON)
-set(ENABLE_SZIP_DEFAULT ON)
-set(ENABLE_HDF5_DEFAULT ON)
-set(ENABLE_NETCF_DEFAULT ON)
+set(ENABLE_ZLIB_DEFAULT OFF)
+set(ENABLE_SZIP_DEFAULT OFF)
+set(ENABLE_HDF5_DEFAULT OFF)
+set(ENABLE_NETCF_DEFAULT OFF)
 set(ENABLE_GASNET_DEFAULT ON)
-set(ENABLE_METIS_DEFAULT ON)
+set(ENABLE_METIS_DEFAULT OFF)
 option(USE_SYSTEM_LIBS "Check for system libraries and use them if found" OFF)
 if(USE_SYSTEM_LIBS)
   find_package(EXODUSII)
@@ -124,14 +124,14 @@ cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ${ENABLE_GASNET_DEFAULT}
                        "ENABLE_LEGION" OFF)
 #legion uses that option, too	    
 set(GASNet_CONDUITS udp mpi ibv psm)
-set(GASNet_CONDUIT "mpi" CACHE STRING "Select Gasnet conduit ${GASNet_CONDUITS}")
+set(GASNet_CONDUIT "ibv" CACHE STRING "Select Gasnet conduit ${GASNet_CONDUITS}")
 set_property(CACHE GASNet_CONDUIT PROPERTY STRINGS ${GASNet_CONDUITS})
 option(LEGION_USE_OPENMP "enable OpenMP threads in Legion" OFF)
 
-option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
+option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" OFF)
 
-option(ENABLE_HPX "Enable HPX" ON)
-option(ENABLE_CALIPER "Enable CALIPER" ON)
+option(ENABLE_HPX "Enable HPX" OFF)
+option(ENABLE_CALIPER "Enable CALIPER" OFF)
 
 # build the libraries
 if(ENABLE_ZLIB)
