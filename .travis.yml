@@ -11,14 +11,20 @@ env:
     - DISTRO=fedora SYSTEM_LIBS=ON DOCKERHUB=true
     - DISTRO=ubuntu SYSTEM_LIBS=OFF
     - DISTRO=ubuntu SYSTEM_LIBS=ON DOCKERHUB=true
+    - DISTRO=intel SYSTEM_LIBS=OFF
+    - DISTRO=intel SYSTEM_LIBS=ON DOCKERHUB=true
     - DISTRO=fedora_mpich SYSTEM_LIBS=OFF
     - DISTRO=fedora_mpich SYSTEM_LIBS=ON DOCKERHUB=true
     - DISTRO=ubuntu_mpich SYSTEM_LIBS=OFF
     - DISTRO=ubuntu_mpich SYSTEM_LIBS=ON DOCKERHUB=true
+    - DISTRO=intel_mpich SYSTEM_LIBS=OFF
+    - DISTRO=intel_mpich SYSTEM_LIBS=ON DOCKERHUB=true
     - DISTRO=fedora SYSTEM_LIBS=OFF CMAKE_BUILD_TYPE=Debug
     - DISTRO=ubuntu SYSTEM_LIBS=OFF CMAKE_BUILD_TYPE=Debug
+    - DISTRO=intel SYSTEM_LIBS=OFF CMAKE_BUILD_TYPE=Debug
     - DISTRO=fedora_mpich SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug
     - DISTRO=ubuntu_mpich SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug
+    - DISTRO=intel_mpich SYSTEM_LIBS=ON CMAKE_BUILD_TYPE=Debug
     
 script:
   - cp -vr docker ${HOME}/docker
