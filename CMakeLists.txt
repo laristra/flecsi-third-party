@@ -120,6 +120,7 @@ cmake_dependent_option(ENABLE_ZLIB "Enable zlib" ${ENABLE_ZLIB_DEFAULT}
                        "ENABLE_HDF5 OR ENABLE_SCOTCH" OFF)
 
 option(ENABLE_LEGION "Enable LEGION and dependencies" ${ENABLE_LEGION_DEFAULT})
+
 cmake_dependent_option(ENABLE_GASNET "Enable gasnet" ${ENABLE_GASNET_DEFAULT}
                        "ENABLE_LEGION" OFF)
 #legion uses that option, too	    
@@ -127,6 +128,12 @@ set(GASNet_CONDUITS udp mpi ibv psm)
 set(GASNet_CONDUIT "mpi" CACHE STRING "Select Gasnet conduit ${GASNet_CONDUITS}")
 set_property(CACHE GASNet_CONDUIT PROPERTY STRINGS ${GASNet_CONDUITS})
 option(LEGION_USE_OPENMP "enable OpenMP threads in Legion" OFF)
+option(LEGION_USE_CUDA "enable CUDA in Legion" OFF)
+if(LEGION_USE_CUDA)
+  set(LEGION_BUILD_EXAMPLES OFF)
+else()
+  set(LEGION_BUILD_EXAMPLES ON)
+endif() 
 
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
