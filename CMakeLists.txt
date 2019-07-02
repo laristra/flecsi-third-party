@@ -135,6 +135,11 @@ else()
   set(LEGION_BUILD_EXAMPLES ON)
 endif() 
 option(LEGION_USE_HDF5 "enable HDF5 in Legion" OFF)
+if(LEGION_USE_HDF5)
+  set(LEGION_BUILD_EXAMPLES OFF)
+else()
+  set(LEGION_BUILD_EXAMPLES ON)
+endif() 
                                                               
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
@@ -197,5 +202,4 @@ if(ENABLE_CALIPER)
   include(cmake/caliper.cmake)
 endif(ENABLE_CALIPER)
 
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/install)
 set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${CMAKE_BINARY_DIR}/install")
