@@ -135,11 +135,6 @@ else()
   set(LEGION_BUILD_EXAMPLES ON)
 endif() 
 option(LEGION_USE_HDF5 "enable HDF5 in Legion" OFF)
-if(LEGION_USE_HDF5)
-  set(LEGION_BUILD_EXAMPLES OFF)
-else()
-  set(LEGION_BUILD_EXAMPLES ON)
-endif() 
                                                               
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
