@@ -196,3 +196,6 @@ endif(ENABLE_HPX)
 if(ENABLE_CALIPER)
   include(cmake/caliper.cmake)
 endif(ENABLE_CALIPER)
+
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/install)
+set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${CMAKE_BINARY_DIR}/install")
