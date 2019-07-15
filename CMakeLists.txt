@@ -135,7 +135,7 @@ if(LEGION_USE_CUDA OR LEGION_USE_HDF5)
 else()
   set(LEGION_BUILD_EXAMPLES ON)
 endif() 
-                                                              
+
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
 option(ENABLE_HPX "Enable HPX" OFF)
@@ -196,5 +196,3 @@ endif(ENABLE_HPX)
 if(ENABLE_CALIPER)
   include(cmake/caliper.cmake)
 endif(ENABLE_CALIPER)
-
-set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${CMAKE_BINARY_DIR}/install")
