@@ -21,7 +21,7 @@ RUN ccache -z
 RUN cmake -DBUILD_SHARED_LIBS=ON \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
-          -DENABLE_HPX=ON \
+          -DENABLE_HPX=OFF \
           ..
 RUN make -j2
 RUN ccache -s
@@ -35,7 +35,7 @@ USER flecsi
 
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
-RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
+RUN if false; then \
       git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
       cd flecsi && mkdir build && cd build && \
       cmake -DENABLE_UNIT_TESTS=ON \
