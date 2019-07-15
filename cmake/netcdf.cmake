@@ -12,7 +12,7 @@ ExternalProject_Add(${NETCDF_NAME}
   URL ${NETCDF_URL}/${NETCDF_GZ}
   URL_MD5 ${NETCDF_MD5}
   PREFIX ${NETCDF_NAME}
-  INSTALL_DIR ${NETCDF_NAME}/install
+  INSTALL_DIR install
   UPDATE_COMMAND ""
   PATCH_COMMAND patch -p0 < ${PROJECT_SOURCE_DIR}/patches/netcdf.patch
   CMAKE_ARGS
