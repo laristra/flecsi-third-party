@@ -129,13 +129,12 @@ set(GASNet_CONDUIT "mpi" CACHE STRING "Select Gasnet conduit ${GASNet_CONDUITS}"
 set_property(CACHE GASNet_CONDUIT PROPERTY STRINGS ${GASNet_CONDUITS})
 option(LEGION_USE_OPENMP "enable OpenMP threads in Legion" OFF)
 option(LEGION_USE_CUDA "enable CUDA in Legion" OFF)
-option(LEGION_USE_HDF5 "enable HDF5 in Legion" OFF)
-if(LEGION_USE_CUDA OR LEGION_USE_HDF5)
+if(LEGION_USE_CUDA)
   set(LEGION_BUILD_EXAMPLES OFF)
 else()
   set(LEGION_BUILD_EXAMPLES ON)
 endif() 
-                                                              
+
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
 option(ENABLE_HPX "Enable HPX" OFF)
@@ -196,5 +195,3 @@ endif(ENABLE_HPX)
 if(ENABLE_CALIPER)
   include(cmake/caliper.cmake)
 endif(ENABLE_CALIPER)
-
-set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${CMAKE_BINARY_DIR}/install")
