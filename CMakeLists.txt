@@ -196,3 +196,8 @@ endif(ENABLE_HPX)
 if(ENABLE_CALIPER)
   include(cmake/caliper.cmake)
 endif(ENABLE_CALIPER)
+
+if(DEFINED MPIEXEC_MAX_NUMPROCS AND NPROCS GREATER MPIEXEC_MAX_NUMPROCS)
+  message(WARNING "NPROCS(${NPROCS}) bigger than MPIEXEC_MAX_NUMPROCS(${MPIEXEC_MAX_NUMPROCS}) appending '--oversubscribe'")
+  set(MPIEXEC_PREFLAGS "${MPIEXEC_PREFLAGS} --oversubscribe")
+endif()
