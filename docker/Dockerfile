@@ -6,6 +6,7 @@ ARG CMAKE_BUILD_TYPE
 ARG CI
 ARG TRAVIS
 ARG TRAVIS_BRANCH
+ARG DISTRO
 
 COPY flecsi-third-party/ /home/flecsi/tpl
 RUN rm -rf /home/flecsi/.ccache
@@ -36,13 +37,19 @@ USER flecsi
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
 RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
-      git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
-      cd flecsi && mkdir build && cd build && \
-      cmake -DMPIEXEC_PREFLAGS="--oversubscribe" "-mca" "pml" "^ucx" \
-            -DENABLE_UNIT_TESTS=ON \
-            -DFLECSI_RUNTIME_MODEL=legion \
-            -DENABLE_LEGION=ON .. && \
-      make -j2 && make test ARGS="-V" && \
+      git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi;
+      cd flecsi && mkdir build && cd build;
+      if [ ${DISTRO} = fedora ]; then \
+        cmake -DMPIEXEC_PREFLAGS="--oversubscribe" "-mca" "pml" "^ucx" \
+              -DENABLE_UNIT_TESTS=ON \
+              -DFLECSI_RUNTIME_MODEL=legion \
+              -DENABLE_LEGION=ON ..;
+      else
+        cmake -DENABLE_UNIT_TESTS=ON \
+              -DFLECSI_RUNTIME_MODEL=legion \
+              -DENABLE_LEGION=ON ..;
+      fi;
+      make -j2 && make test ARGS="-V";
       cd ../.. && \
-      rm -rf flecsi; \
+      rm -rf flecsi;
     fi;
