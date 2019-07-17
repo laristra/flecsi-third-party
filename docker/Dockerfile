@@ -6,6 +6,7 @@ ARG CMAKE_BUILD_TYPE
 ARG CI
 ARG TRAVIS
 ARG TRAVIS_BRANCH
+ARG DISTRO
 
 COPY flecsi-third-party/ /home/flecsi/tpl
 RUN rm -rf /home/flecsi/.ccache
@@ -21,7 +22,7 @@ RUN ccache -z
 RUN cmake -DBUILD_SHARED_LIBS=ON \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
-          -DENABLE_HPX=ON \
+          -DENABLE_HPX=OFF \
           ..
 RUN make -j2
 RUN ccache -s
@@ -38,10 +39,10 @@ WORKDIR /home/flecsi
 RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
       git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
       cd flecsi && mkdir build && cd build && \
-      cmake -DENABLE_UNIT_TESTS=ON \
+      cmake -DMPIEXEC_PREFLAGS=$([ "$DISTRO" = "fedora" ] && echo '--oversubscribe -mca pml ^ucx' || echo ) \
+            -DENABLE_UNIT_TESTS=ON \
             -DFLECSI_RUNTIME_MODEL=legion \
             -DENABLE_LEGION=ON .. && \
-      make -j2 && make test && \
-      cd ../.. && \
-      rm -rf flecsi; \
+      make -j2 && make test ARGS="-V" && \
+      cd ../.. && rm -rf flecsi; \
     fi;
