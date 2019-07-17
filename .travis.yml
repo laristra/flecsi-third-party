@@ -31,8 +31,10 @@ script:
   - if [[ ${TRAVIS_BRANCH} != master ]]; then TAG="${TAG}_${TRAVIS_BRANCH//[^a-zA-Z0-9]/_}"; fi
   - docker build --build-arg SYSTEM_LIBS=${SYSTEM_LIBS}
                  --build-arg CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-                 --build-arg CI=${CI} --build-arg TRAVIS=${TRAVIS}
+                 --build-arg CI=${CI} 
+                 --build-arg TRAVIS=${TRAVIS}
                  --build-arg TRAVIS_BRANCH=${TRAVIS_BRANCH}
+                 --build-arg DISTRO=${DISTRO}
                  -t ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} ${HOME}/docker/ &&
     rm -rf ${HOME}/.ccache &&
     CON=$(docker run -d ${TRAVIS_REPO_SLUG}:${DISTRO}${TAG} /bin/bash) &&
