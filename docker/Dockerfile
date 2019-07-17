@@ -36,10 +36,10 @@ USER flecsi
 
 # Build FleCSI if it is not for DockerHub and master branch
 WORKDIR /home/flecsi
-RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
+RUN if [ ${TRAVIS_BRANCH} != refactor ]; then
       git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi;
       cd flecsi && mkdir build && cd build;
-      if [ ${DISTRO} = fedora ]; then \
+      if [ ${DISTRO} = fedora ]; then
         cmake -DMPIEXEC_PREFLAGS="--oversubscribe" "-mca" "pml" "^ucx" \
               -DENABLE_UNIT_TESTS=ON \
               -DFLECSI_RUNTIME_MODEL=legion \
@@ -50,6 +50,5 @@ RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
               -DENABLE_LEGION=ON ..;
       fi;
       make -j2 && make test ARGS="-V";
-      cd ../.. && \
-      rm -rf flecsi;
+      cd ../.. && rm -rf flecsi;
     fi;
