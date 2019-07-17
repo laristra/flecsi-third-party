@@ -44,5 +44,5 @@ RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
             -DFLECSI_RUNTIME_MODEL=legion \
             -DENABLE_LEGION=ON .. && \
       make -j2 && make test ARGS="-V" && \
-      cd ../.. && rm -rf flecsi \
+      cd ../.. && rm -rf flecsi; \
     fi;
