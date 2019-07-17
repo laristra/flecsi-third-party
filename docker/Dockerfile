@@ -22,7 +22,7 @@ RUN ccache -z
 RUN cmake -DBUILD_SHARED_LIBS=ON \
           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
           -DUSE_SYSTEM_LIBS=${SYSTEM_LIBS} \
-          -DENABLE_HPX=OFF \
+          -DENABLE_HPX=ON \
           ..
 RUN make -j2
 RUN ccache -s
