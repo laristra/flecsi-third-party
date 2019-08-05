@@ -38,7 +38,6 @@ USER flecsi
 WORKDIR /home/flecsi
 RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
       git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
-      if 
       cd flecsi && mkdir build && cd build && \
       cmake -DMPIEXEC_PREFLAGS=$([ "$DISTRO" = "fedora" || "$DISTRO" = "ubuntu" ] && echo '--oversubscribe -mca pml ^ucx' || echo ) \
             -DENABLE_UNIT_TESTS=ON \
