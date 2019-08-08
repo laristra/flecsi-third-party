@@ -41,7 +41,7 @@ RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
       cd flecsi && mkdir build && cd build && \
       cmake -DMPIEXEC_PREFLAGS=$([ "$DISTRO" = "fedora" ] || [ "$DISTRO" = "ubuntu" ] && echo '--oversubscribe -mca pml ^ucx' || echo ) \
             -DENABLE_UNIT_TESTS=ON \
-            -DFLECSI_RUNTIME_MODEL=legion \
+            -DFLECSI_RUNTIME_MODEL=mpi \
             -DENABLE_LEGION=ON .. && \
       make -j2 && make test ARGS="-V" && \
       cd ../.. && rm -rf flecsi; \
