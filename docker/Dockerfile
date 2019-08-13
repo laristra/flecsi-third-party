@@ -39,9 +39,9 @@ WORKDIR /home/flecsi
 RUN if [ ${TRAVIS_BRANCH} != refactor ]; then \
       git clone -b master --depth 1 --recursive https://github.com/laristra/flecsi flecsi && \
       cd flecsi && mkdir build && cd build && \
-      cmake -DMPIEXEC_PREFLAGS=$([ "$DISTRO" = "fedora" ] && echo '--oversubscribe -mca pml ^ucx' || echo ) \
+      cmake -DMPIEXEC_PREFLAGS=$([ "$DISTRO" = "fedora" ] || [ "$DISTRO" = "ubuntu" ] && echo '--oversubscribe -mca pml ^ucx' || echo ) \
             -DENABLE_UNIT_TESTS=ON \
-            -DFLECSI_RUNTIME_MODEL=legion \
+            -DFLECSI_RUNTIME_MODEL=mpi \
             -DENABLE_LEGION=ON .. && \
       make -j2 && make test ARGS="-V" && \
       cd ../.. && rm -rf flecsi; \
