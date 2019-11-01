@@ -129,6 +129,7 @@ set(GASNet_CONDUIT "mpi" CACHE STRING "Select Gasnet conduit ${GASNet_CONDUITS}"
 set_property(CACHE GASNet_CONDUIT PROPERTY STRINGS ${GASNet_CONDUITS})
 option(LEGION_USE_OPENMP "enable OpenMP threads in Legion" OFF)
 option(LEGION_USE_CUDA "enable CUDA in Legion" OFF)
+option(LEGION_USE_KOKKOS "enable KOKKOS support in Legion" OFF)
 option(LEGION_USE_HDF5 "enable HDF5 in Legion" OFF)
 if(LEGION_USE_CUDA OR LEGION_USE_HDF5)
   set(LEGION_BUILD_EXAMPLES OFF)
