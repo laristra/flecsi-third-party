@@ -1,6 +1,6 @@
 # Third-Party
 
-This project provides an easy way to build and install many third party
+This project provides a really easy way to build and install many third party
 libraries.
 
 ## Installation
