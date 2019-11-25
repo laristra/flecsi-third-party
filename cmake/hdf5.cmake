@@ -43,6 +43,7 @@ ExternalProject_Add(${HDF5_NAME}
 )
 ExternalProject_get_property(${HDF5_NAME} INSTALL_DIR)
 
+set(HDF5_ROOT ${INSTALL_DIR})
 set(HDF5_INCLUDE_DIR ${INSTALL_DIR}/include)
 if (CMAKE_BUILD_TYPE MATCHES Debug)
   set(HDF5_LIBRARIES     ${INSTALL_DIR}/lib/${CMAKE_LIBRARY_PREFIX}hdf5_debug${CMAKE_LIBRARY_SUFFIX})
