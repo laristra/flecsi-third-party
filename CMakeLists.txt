@@ -106,7 +106,7 @@ endif(USE_SYSTEM_LIBS)
 option(ENABLE_EXODUS "Enable Exodus and dependencies" ${ENABLE_EXODUS_DEFAULT}) 
 cmake_dependent_option(ENABLE_HDF5 "Enable HDF5" ${ENABLE_HDF5_DEFAULT}
                        "ENABLE_EXODUS" OFF)
-cmake_dependent_option(ENABLE_NETCDF "Enable HDF5" ${ENABLE_NETCF_DEFAULT}
+cmake_dependent_option(ENABLE_NETCDF "Enable netcdf" ${ENABLE_NETCF_DEFAULT}
                        "ENABLE_EXODUS" OFF)
 cmake_dependent_option(ENABLE_SZIP "Enable szip" ${ENABLE_SZIP_DEFAULT}
                        "ENABLE_HDF5" OFF)
@@ -135,6 +135,11 @@ if(LEGION_USE_CUDA OR LEGION_USE_HDF5)
 else()
   set(LEGION_BUILD_EXAMPLES ON)
 endif() 
+
+option(HDF5_ENABLE_PARALLEL "enable parallel HDF5" OFF)
+if(${LEGION_USE_HDF5} AND ${HDF5_ENABLE_PARALLEL})
+ message(FATAL_ERROR "LEGION_USE_HDF5 and HDF5_ENABLE_PARALLEL cannot both be set.")
+endif()
 
 option(ENABLE_CINCH_UTILS "Enable cinch-utils and dependencies" ON)
 
