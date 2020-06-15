@@ -1,7 +1,7 @@
 [submodule "legion"]
 	path = legion
 	url = ../../StanfordLegion/legion.git
-  branch = control_replication
+	branch = control_replication
 [submodule "cinch-utils"]
 	path = cinch-utils
 	url = ../cinch-utils.git
